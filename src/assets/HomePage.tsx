@@ -1,27 +1,29 @@
 import React from "react";
-import { ListItem } from "./ListItem";
-import { StateType, ArticleType } from "../types/types";
+import { StateType } from "../types/types";
+import { Header } from "./Header";
+import { Content } from "./Content";
 
 class HomePage extends React.Component {
   state: StateType = {
     list: [],
     articles: [],
+    counter: 10,
     isLoading: false,
+    currentIndex: 0,
   };
 
   componentDidMount() {
     this.getArticlesList();
   }
 
-  getArticlesList(incomingList?: number) {
-    const { isLoading } = this.state;
-    const incomingListAdder = incomingList ? incomingList : 0;
-    const adder = !isLoading && incomingList ? 0 : 10;
-    fetch("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")
+  getArticlesList() {
+    const { currentIndex, counter } = this.state;
+
+    fetch("https://hacker-news.firebaseio.com/v0/topstories.json")
       .then(res => res.json())
       .then(result => {
-        const slicedResult = result.slice(0, incomingListAdder + adder);
-        this.setState(() => ({ list: slicedResult, isLoading: true }));
+        const slicedResult = result.slice(currentIndex, currentIndex + counter);
+        this.setState({ list: slicedResult, isLoading: true });
         this.getArticles();
       })
       .catch(reason => console.log(reason));
@@ -32,7 +34,7 @@ class HomePage extends React.Component {
 
     list.map(async (number: Number) => {
       const res = await fetch(
-        `https://hacker-news.firebaseio.com/v0/item/${number}.json?print=pretty`
+        `https://hacker-news.firebaseio.com/v0/item/${number}.json`
       );
       const result = await res.json();
       this.setState((state: StateType) => ({
@@ -42,19 +44,25 @@ class HomePage extends React.Component {
     });
   }
 
-  render() {
-    const { articles, isLoading, list } = this.state;
+  nextPage() {
+    this.setState((state: StateType) => ({
+      currentIndex: state.currentIndex + state.counter,
+    }));
+    this.getArticlesList();
+  }
 
-    console.log({ list, length: list.length });
+  render() {
+    const { articles, isLoading, currentIndex, counter } = this.state;
 
     return (
-      <div>
-        {!isLoading
-          ? articles.map((article: ArticleType, index) => (
-              <ListItem key={index} article={article} index={index} />
-            ))
-          : "Is loading"}
-        <div className="more" onClick={() => this.getArticlesList(list.length)}>
+      <div className="app">
+        <Header />
+        <Content
+          articles={articles.slice(currentIndex, currentIndex + counter)}
+          isLoading={isLoading}
+          currentIndex={currentIndex}
+        />
+        <div className="more" onClick={() => this.nextPage()}>
           More
         </div>
       </div>

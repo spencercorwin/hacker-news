@@ -14,9 +14,18 @@ export interface StateType {
   list: Number[];
   articles: ArticleType[];
   isLoading: boolean;
+  counter: number;
+  currentIndex: 0;
 }
 
 export interface ListItemType {
   article: ArticleType;
   index: number;
+}
+
+export interface HeaderType {}
+export interface ContentType {
+  isLoading: boolean;
+  articles: ArticleType[];
+  currentIndex: number;
 }

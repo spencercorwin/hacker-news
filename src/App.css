@@ -1,14 +1,20 @@
 .app {
-  text-align: center;
+  margin: 10px auto;
+  border-bottom: 2px solid #ff7066;
+}
+
+.head {
+  background-color: #ff7066;
+  padding: 10px 4px;
+}
+
+.content {
 }
 
 a {
   color: #000;
   text-decoration: none;
   cursor: pointer;
-}
-
-body {
 }
 
 .article {
@@ -45,4 +51,5 @@ body {
 .more {
   cursor: pointer;
   margin-left: 30px;
+  margin-bottom: 10px;
 }
