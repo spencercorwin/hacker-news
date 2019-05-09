@@ -2,6 +2,42 @@
   text-align: center;
 }
 
+a {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 body {
-  /* background-color:  */
+}
+
+.article {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.left {
+  width: 30px;
+}
+
+.article .header {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.article .header .url {
+  color: #828282;
+  margin: 0 4px;
+}
+
+.article .more-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.article .points-by {
+  padding: 0 4px;
 }

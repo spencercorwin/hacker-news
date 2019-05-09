@@ -1,14 +1,12 @@
 import React from "react";
-
-interface State {
-  list: [];
-  articles: { id: string; title: string }[];
-}
+import { ListItem } from "./ListItem";
+import { StateType, ArticleType } from "../types/types";
 
 class HomePage extends React.Component {
-  state: State = {
+  state: StateType = {
     list: [],
     articles: [],
+    loading: false,
   };
 
   componentDidMount() {
@@ -19,36 +17,38 @@ class HomePage extends React.Component {
     fetch("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")
       .then(res => res.json())
       .then(result => {
-        const slicedResult = result.slice(0, 9);
-        this.setState({ list: slicedResult });
+        const slicedResult = result.slice(0, 10);
+        this.setState(() => ({ list: slicedResult, loading: true }));
         this.getArticles();
-      });
+      })
+      .catch(reason => console.log(reason));
   }
 
   getArticles() {
     const { list } = this.state;
 
-    list.map((number: Number) => {
-      return fetch(
+    list.map(async (number: Number) => {
+      const res = await fetch(
         `https://hacker-news.firebaseio.com/v0/item/${number}.json?print=pretty`
-      )
-        .then(res => res.json())
-        .then(result => {
-          this.setState({ articles: [...this.state.articles, result] });
-        });
+      );
+      const result = await res.json();
+      this.setState((state: StateType) => ({
+        articles: [...state.articles, result],
+        loading: false,
+      }));
     });
   }
 
   render() {
-    const { articles } = this.state;
-
-    console.log({ articles });
+    const { articles, loading } = this.state;
 
     return (
       <div>
-        {articles.map(num => (
-          <div key={num.id}>{num.title}</div>
-        ))}
+        {!loading
+          ? articles.map((article: ArticleType, index) => (
+              <ListItem key={index} article={article} index={index} />
+            ))
+          : "Is loading"}
       </div>
     );
   }
