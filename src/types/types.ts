@@ -13,7 +13,7 @@ export interface ArticleType {
 export interface StateType {
   list: Number[];
   articles: ArticleType[];
-  loading: boolean;
+  isLoading: boolean;
 }
 
 export interface ListItemType {

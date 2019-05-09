@@ -6,19 +6,22 @@ class HomePage extends React.Component {
   state: StateType = {
     list: [],
     articles: [],
-    loading: false,
+    isLoading: false,
   };
 
   componentDidMount() {
     this.getArticlesList();
   }
 
-  getArticlesList() {
+  getArticlesList(incomingList?: number) {
+    const { isLoading } = this.state;
+    const incomingListAdder = incomingList ? incomingList : 0;
+    const adder = !isLoading && incomingList ? 0 : 10;
     fetch("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty")
       .then(res => res.json())
       .then(result => {
-        const slicedResult = result.slice(0, 10);
-        this.setState(() => ({ list: slicedResult, loading: true }));
+        const slicedResult = result.slice(0, incomingListAdder + adder);
+        this.setState(() => ({ list: slicedResult, isLoading: true }));
         this.getArticles();
       })
       .catch(reason => console.log(reason));
@@ -34,21 +37,26 @@ class HomePage extends React.Component {
       const result = await res.json();
       this.setState((state: StateType) => ({
         articles: [...state.articles, result],
-        loading: false,
+        isLoading: false,
       }));
     });
   }
 
   render() {
-    const { articles, loading } = this.state;
+    const { articles, isLoading, list } = this.state;
+
+    console.log({ list, length: list.length });
 
     return (
       <div>
-        {!loading
+        {!isLoading
           ? articles.map((article: ArticleType, index) => (
               <ListItem key={index} article={article} index={index} />
             ))
           : "Is loading"}
+        <div className="more" onClick={() => this.getArticlesList(list.length)}>
+          More
+        </div>
       </div>
     );
   }
