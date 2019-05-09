@@ -26,6 +26,7 @@ export interface ListItemType {
 
 export interface HeaderType {
   sortAnotherWay: (stories: string) => void;
+  sortBy: string;
 }
 
 export interface ContentType {

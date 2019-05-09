@@ -27,16 +27,14 @@ class HomePage extends React.Component {
   getArticlesList() {
     const { currentIndex, counter, sortBy } = this.state;
 
-    console.log({
-      url: `https://hacker-news.firebaseio.com/v0/${sortBy}.json`,
-    });
-
     fetch(`https://hacker-news.firebaseio.com/v0/${sortBy}.json`)
       .then(res => res.json())
       .then(result => {
         const slicedResult = result.slice(currentIndex, currentIndex + counter);
-        this.setState({ list: slicedResult, isLoading: true });
-        this.getArticles();
+        this.setState(
+          { list: slicedResult, isLoading: true },
+          this.getArticles
+        );
       })
       .catch(reason => console.log(reason));
   }
@@ -57,18 +55,20 @@ class HomePage extends React.Component {
   }
 
   nextPage() {
-    this.setState((state: StateType) => ({
-      currentIndex: state.currentIndex + state.counter,
-    }));
-    this.getArticlesList();
+    this.setState(
+      (state: StateType) => ({
+        currentIndex: state.currentIndex + state.counter,
+      }),
+      this.getArticlesList
+    );
   }
 
   render() {
-    const { articles, isLoading, currentIndex, counter } = this.state;
+    const { articles, isLoading, currentIndex, counter, sortBy } = this.state;
 
     return (
       <div className="app">
-        <Header sortAnotherWay={this.sortAnotherWay} />
+        <Header sortAnotherWay={this.sortAnotherWay} sortBy={sortBy} />
         <Content
           articles={articles.slice(currentIndex, currentIndex + counter)}
           isLoading={isLoading}

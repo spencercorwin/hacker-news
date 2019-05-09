@@ -7,26 +7,27 @@ class Header extends React.PureComponent<HeaderType> {
   };
 
   render() {
+    const { sortBy } = this.props;
     return (
       <div className="head">
         <span className="title">Almost Hacker News</span>
         <span className="space">|</span>
         <span
-          className="sort"
+          className={`sort${sortBy === "topstories" ? " active" : ""}`}
           onClick={() => this.sortAnotherWay("topstories")}
         >
           Top Stories
         </span>
         <span className="space">|</span>
         <span
-          className="sort"
+          className={`sort${sortBy === "newstories" ? " active" : ""}`}
           onClick={() => this.sortAnotherWay("newstories")}
         >
           New Stories
         </span>
         <span className="space">|</span>
         <span
-          className="sort"
+          className={`sort${sortBy === "beststories" ? " active" : ""}`}
           onClick={() => this.sortAnotherWay("beststories")}
         >
           Best Stories

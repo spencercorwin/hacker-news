@@ -33,6 +33,10 @@ body {
   font-weight: 400;
 }
 
+.head .sort.active {
+  color: #fff;
+}
+
 .head .space {
   padding: 0 4px;
 }
