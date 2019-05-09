@@ -8,15 +8,22 @@ class Content extends React.PureComponent<ContentType> {
 
     return (
       <div className="content">
-        {!isLoading
-          ? articles.map((article: ArticleType, index) => (
-              <ListItem
-                key={index + currentIndex}
-                article={article}
-                index={index + currentIndex}
-              />
-            ))
-          : "Is loading"}
+        {!isLoading ? (
+          articles.map((article: ArticleType, index) => (
+            <ListItem
+              key={index + currentIndex}
+              article={article}
+              index={index + currentIndex}
+            />
+          ))
+        ) : (
+          <div className="loading">
+            <img
+              alt=""
+              src="https://cdn.friendbuy.com/widget/images/shared/spinner.svg"
+            />
+          </div>
+        )}
       </div>
     );
   }

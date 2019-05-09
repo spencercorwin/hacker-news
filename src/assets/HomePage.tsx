@@ -8,7 +8,7 @@ class HomePage extends React.Component {
     list: [],
     articles: [],
     counter: 10,
-    isLoading: false,
+    isLoading: true,
     currentIndex: 0,
     sortBy: "topstories",
   };
@@ -19,7 +19,13 @@ class HomePage extends React.Component {
 
   sortAnotherWay = (stories: string) => {
     this.setState(
-      { sortBy: stories, currentIndex: 0, list: [], articles: [] },
+      {
+        sortBy: stories,
+        currentIndex: 0,
+        list: [],
+        articles: [],
+        isLoading: true,
+      },
       this.getArticlesList
     );
   };
@@ -31,10 +37,7 @@ class HomePage extends React.Component {
       .then(res => res.json())
       .then(result => {
         const slicedResult = result.slice(currentIndex, currentIndex + counter);
-        this.setState(
-          { list: slicedResult, isLoading: true },
-          this.getArticles
-        );
+        this.setState({ list: slicedResult }, this.getArticles);
       })
       .catch(reason => console.log(reason));
   }
@@ -58,6 +61,7 @@ class HomePage extends React.Component {
     this.setState(
       (state: StateType) => ({
         currentIndex: state.currentIndex + state.counter,
+        isLoading: true,
       }),
       this.getArticlesList
     );

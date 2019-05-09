@@ -33,6 +33,7 @@ class Header extends React.PureComponent<HeaderType> {
           Best Stories
         </span>
         <span className="space">|</span>
+        <div className="settings">Settings</div>
       </div>
     );
   }
