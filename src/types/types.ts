@@ -16,6 +16,7 @@ export interface StateType {
   isLoading: boolean;
   counter: number;
   currentIndex: 0;
+  sortBy: string;
 }
 
 export interface ListItemType {
@@ -23,7 +24,10 @@ export interface ListItemType {
   index: number;
 }
 
-export interface HeaderType {}
+export interface HeaderType {
+  sortAnotherWay: (stories: string) => void;
+}
+
 export interface ContentType {
   isLoading: boolean;
   articles: ArticleType[];

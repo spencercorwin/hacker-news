@@ -1,11 +1,40 @@
+@font-face {
+  font-family: "Verdana";
+  src: url("https://s3-us-west-1.amazonaws.com/static-friendbuy-com/widget/jon-test/verdana_bold.otf")
+    format("opentype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Verdana";
+  src: url("https://s3-us-west-1.amazonaws.com/static-friendbuy-com/widget/jon-test/Verdana.otf")
+    format("opentype");
+  font-weight: 400;
+}
+
+body {
+  font-family: "Verdana";
+}
+
 .app {
-  margin: 10px auto;
+  margin: 0 auto;
   border-bottom: 2px solid #ff7066;
 }
 
 .head {
   background-color: #ff7066;
   padding: 10px 4px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.head .sort {
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.head .space {
+  padding: 0 4px;
 }
 
 .content {
@@ -24,7 +53,7 @@ a {
 }
 
 .left {
-  width: 30px;
+  width: 40px;
 }
 
 .article .header {
@@ -50,6 +79,6 @@ a {
 
 .more {
   cursor: pointer;
-  margin-left: 30px;
+  margin-left: 40px;
   margin-bottom: 10px;
 }

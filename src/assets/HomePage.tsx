@@ -10,16 +10,28 @@ class HomePage extends React.Component {
     counter: 10,
     isLoading: false,
     currentIndex: 0,
+    sortBy: "topstories",
   };
 
   componentDidMount() {
     this.getArticlesList();
   }
 
-  getArticlesList() {
-    const { currentIndex, counter } = this.state;
+  sortAnotherWay = (stories: string) => {
+    this.setState(
+      { sortBy: stories, currentIndex: 0, list: [], articles: [] },
+      this.getArticlesList
+    );
+  };
 
-    fetch("https://hacker-news.firebaseio.com/v0/topstories.json")
+  getArticlesList() {
+    const { currentIndex, counter, sortBy } = this.state;
+
+    console.log({
+      url: `https://hacker-news.firebaseio.com/v0/${sortBy}.json`,
+    });
+
+    fetch(`https://hacker-news.firebaseio.com/v0/${sortBy}.json`)
       .then(res => res.json())
       .then(result => {
         const slicedResult = result.slice(currentIndex, currentIndex + counter);
@@ -56,7 +68,7 @@ class HomePage extends React.Component {
 
     return (
       <div className="app">
-        <Header />
+        <Header sortAnotherWay={this.sortAnotherWay} />
         <Content
           articles={articles.slice(currentIndex, currentIndex + counter)}
           isLoading={isLoading}
