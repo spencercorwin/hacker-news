@@ -41,7 +41,7 @@ body {
   color: #fff;
 }
 
-.head .space {
+.space {
   padding: 0 4px;
 }
 
@@ -93,4 +93,7 @@ a {
   cursor: pointer;
   margin-left: 40px;
   margin-bottom: 10px;
+}
+
+.more span {
 }

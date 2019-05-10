@@ -2,6 +2,7 @@ import React from "react";
 import { StateType } from "../types/types";
 import { Header } from "./Header";
 import { Content } from "./Content";
+import { Discuss } from "./Discuss";
 
 class HomePage extends React.Component {
   state: StateType = {
@@ -11,6 +12,7 @@ class HomePage extends React.Component {
     isLoading: true,
     currentIndex: 0,
     sortBy: "topstories",
+    currentID: 0,
   };
 
   componentDidMount() {
@@ -25,6 +27,7 @@ class HomePage extends React.Component {
         list: [],
         articles: [],
         isLoading: true,
+        currentID: 0,
       },
       this.getArticlesList
     );
@@ -67,20 +70,78 @@ class HomePage extends React.Component {
     );
   }
 
+  previousPage() {
+    this.setState(
+      (state: StateType) => ({
+        currentIndex: state.currentIndex - state.counter,
+        isLoading: true,
+      }),
+      this.getArticlesList
+    );
+  }
+
+  showNumberOfArticles(num: number) {
+    this.setState({ counter: num }, this.getArticlesList);
+  }
+
+  switchPage = (id?: number) => {
+    if (this.state.currentID === 0) {
+      this.setState({ currentID: id });
+    } else {
+      this.setState({ currentID: 0 });
+    }
+  };
+
   render() {
-    const { articles, isLoading, currentIndex, counter, sortBy } = this.state;
+    const {
+      articles,
+      currentID,
+      isLoading,
+      currentIndex,
+      counter,
+      sortBy,
+    } = this.state;
 
     return (
       <div className="app">
         <Header sortAnotherWay={this.sortAnotherWay} sortBy={sortBy} />
-        <Content
-          articles={articles.slice(currentIndex, currentIndex + counter)}
-          isLoading={isLoading}
-          currentIndex={currentIndex}
-        />
-        <div className="more" onClick={() => this.nextPage()}>
-          More
-        </div>
+        {currentID === 0 ? (
+          <Content
+            articles={articles.slice(currentIndex, currentIndex + counter)}
+            isLoading={isLoading}
+            currentIndex={currentIndex}
+            switchPage={this.switchPage}
+          />
+        ) : (
+          <Discuss
+            id={currentID}
+            isLoading={isLoading}
+            switchPage={this.switchPage}
+          />
+        )}
+        {currentID === 0 && (
+          <div className="more">
+            {currentIndex !== 0 && (
+              <>
+                <span onClick={() => this.previousPage()}>
+                  {currentIndex > 0 ? "Before" : ""}
+                </span>
+                <span className="space">|</span>
+              </>
+            )}
+            <span onClick={() => this.nextPage()}>Next</span>
+            <span className="space">|</span>
+            {counter === 10 ? (
+              <span onClick={() => this.showNumberOfArticles(20)}>
+                Show 20 articles
+              </span>
+            ) : (
+              <span onClick={() => this.showNumberOfArticles(10)}>
+                Show 10 articles
+              </span>
+            )}
+          </div>
+        )}
       </div>
     );
   }

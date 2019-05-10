@@ -4,7 +4,7 @@ import { ListItem } from "./ListItem";
 
 class Content extends React.PureComponent<ContentType> {
   render() {
-    const { isLoading, articles, currentIndex } = this.props;
+    const { isLoading, articles, currentIndex, switchPage } = this.props;
 
     return (
       <div className="content">
@@ -14,6 +14,7 @@ class Content extends React.PureComponent<ContentType> {
               key={index + currentIndex}
               article={article}
               index={index + currentIndex}
+              switchPage={switchPage}
             />
           ))
         ) : (

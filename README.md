@@ -6,3 +6,5 @@
 <p>• refactor with a more specific tsconfig file</p>
 <p>• fix bug or restrict loading - app breaks after loading around 140 results</p>
 <p>• implement with router</p>
+<p>• router params to fetch specific data</p>
+<p>• reduxify<p>
