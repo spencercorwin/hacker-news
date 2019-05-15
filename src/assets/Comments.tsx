@@ -1,22 +1,8 @@
 import React from "react";
-import { DiscussType, DiscussState } from "../types/types";
-import { ListItem } from "./ListItem";
-import { Comments } from "./Comments";
+import { CommentsType, CommentsState } from "../types/types";
 
-class Discuss extends React.Component<DiscussType> {
-  state: DiscussState = {
-    article: {
-      by: "",
-      descendants: 0,
-      id: 0,
-      kids: [],
-      score: 0,
-      time: 0,
-      title: "",
-      type: "",
-      url: "",
-    },
-  };
+class Comments extends React.Component<CommentsType> {
+  state: CommentsState = {};
 
   componentDidMount() {
     this.setState({ isLoading: true }, this.getArticle);
@@ -34,16 +20,12 @@ class Discuss extends React.Component<DiscussType> {
   }
 
   render() {
-    const { article } = this.state;
-    const { isLoading, switchPage } = this.props;
+    const { isLoading } = this.props;
 
     return (
       <div className="">
         {!isLoading ? (
-          <div>
-            <ListItem article={article} index={-1} switchPage={switchPage} />
-            <Comments isLoading={isLoading} id={article.id} />
-          </div>
+          <div>comments</div>
         ) : (
           <div className="loading">
             <img
@@ -57,4 +39,4 @@ class Discuss extends React.Component<DiscussType> {
   }
 }
 
-export { Discuss };
+export { Comments };

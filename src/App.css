@@ -80,9 +80,17 @@ a {
   margin: 0 4px;
 }
 
+.right {
+  margin-right: 25px;
+}
+
 .article .more-info {
   display: flex;
   flex-direction: row;
+}
+
+.article .text {
+  margin-top: 10px;
 }
 
 .article .points-by {

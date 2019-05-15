@@ -37,6 +37,10 @@ export interface ContentType {
   articles: ArticleType[];
   currentIndex: number;
   switchPage: (id?: number) => void;
+  previousPage: (id?: number) => void;
+  nextPage: (id?: number) => void;
+  showNumberOfArticles: (num: number) => void;
+  counter: number;
 }
 
 export interface DiscussType {
@@ -48,3 +52,9 @@ export interface DiscussType {
 export interface DiscussState {
   article: ArticleType;
 }
+
+export interface CommentsType {
+  isLoading: boolean;
+  id: number;
+}
+export interface CommentsState {}

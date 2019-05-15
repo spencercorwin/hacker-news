@@ -3,8 +3,11 @@ import { StateType } from "../types/types";
 import { Header } from "./Header";
 import { Content } from "./Content";
 import { Discuss } from "./Discuss";
+import { Route, Redirect, RouteComponentProps } from "react-router-dom";
 
-class HomePage extends React.Component {
+export interface HomePageType extends RouteComponentProps<any> {}
+
+class HomePage extends React.Component<HomePageType> {
   state: StateType = {
     list: [],
     articles: [],
@@ -33,7 +36,7 @@ class HomePage extends React.Component {
     );
   };
 
-  getArticlesList() {
+  getArticlesList = () => {
     const { currentIndex, counter, sortBy } = this.state;
 
     fetch(`https://hacker-news.firebaseio.com/v0/${sortBy}.json`)
@@ -43,9 +46,9 @@ class HomePage extends React.Component {
         this.setState({ list: slicedResult }, this.getArticles);
       })
       .catch(reason => console.log(reason));
-  }
+  };
 
-  getArticles() {
+  getArticles = () => {
     const { list } = this.state;
 
     list.map(async (number: Number) => {
@@ -58,9 +61,9 @@ class HomePage extends React.Component {
         isLoading: false,
       }));
     });
-  }
+  };
 
-  nextPage() {
+  nextPage = () => {
     this.setState(
       (state: StateType) => ({
         currentIndex: state.currentIndex + state.counter,
@@ -68,9 +71,9 @@ class HomePage extends React.Component {
       }),
       this.getArticlesList
     );
-  }
+  };
 
-  previousPage() {
+  previousPage = () => {
     this.setState(
       (state: StateType) => ({
         currentIndex: state.currentIndex - state.counter,
@@ -78,11 +81,11 @@ class HomePage extends React.Component {
       }),
       this.getArticlesList
     );
-  }
+  };
 
-  showNumberOfArticles(num: number) {
+  showNumberOfArticles = (num: number) => {
     this.setState({ counter: num }, this.getArticlesList);
-  }
+  };
 
   switchPage = (id?: number) => {
     if (this.state.currentID === 0) {
@@ -92,56 +95,50 @@ class HomePage extends React.Component {
     }
   };
 
-  render() {
-    const {
-      articles,
-      currentID,
-      isLoading,
-      currentIndex,
-      counter,
-      sortBy,
-    } = this.state;
+  header = () => {
+    const { sortBy } = this.state;
+    return <Header sortAnotherWay={this.sortAnotherWay} sortBy={sortBy} />;
+  };
+
+  content = () => {
+    const { articles, isLoading, currentIndex, counter } = this.state;
 
     return (
+      <Content
+        articles={articles.slice(currentIndex, currentIndex + counter)}
+        isLoading={isLoading}
+        currentIndex={currentIndex}
+        switchPage={this.switchPage}
+        previousPage={this.previousPage}
+        nextPage={this.nextPage}
+        showNumberOfArticles={this.showNumberOfArticles}
+        counter={counter}
+      />
+    );
+  };
+
+  discuss = () => {
+    const { currentID, isLoading } = this.state;
+
+    if (!currentID) {
+      return <Redirect to="/" />;
+    }
+
+    return (
+      <Discuss
+        id={currentID}
+        isLoading={isLoading}
+        switchPage={this.switchPage}
+      />
+    );
+  };
+
+  render() {
+    return (
       <div className="app">
-        <Header sortAnotherWay={this.sortAnotherWay} sortBy={sortBy} />
-        {currentID === 0 ? (
-          <Content
-            articles={articles.slice(currentIndex, currentIndex + counter)}
-            isLoading={isLoading}
-            currentIndex={currentIndex}
-            switchPage={this.switchPage}
-          />
-        ) : (
-          <Discuss
-            id={currentID}
-            isLoading={isLoading}
-            switchPage={this.switchPage}
-          />
-        )}
-        {currentID === 0 && (
-          <div className="more">
-            {currentIndex !== 0 && (
-              <>
-                <span onClick={() => this.previousPage()}>
-                  {currentIndex > 0 ? "Before" : ""}
-                </span>
-                <span className="space">|</span>
-              </>
-            )}
-            <span onClick={() => this.nextPage()}>Next</span>
-            <span className="space">|</span>
-            {counter === 10 ? (
-              <span onClick={() => this.showNumberOfArticles(20)}>
-                Show 20 articles
-              </span>
-            ) : (
-              <span onClick={() => this.showNumberOfArticles(10)}>
-                Show 10 articles
-              </span>
-            )}
-          </div>
-        )}
+        <Route path="/" component={this.header} />
+        <Route exact path="/" component={this.content} />
+        <Route exact path="/item" component={this.discuss} />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import { ListItemType } from "../types/types";
+import { Link } from "react-router-dom";
 
 class ListItem extends React.Component<ListItemType> {
   getUrl = (url: string) => {
@@ -7,10 +8,12 @@ class ListItem extends React.Component<ListItemType> {
     return url.replace(regex, "");
   };
 
-  render() {
-    const { article, index, switchPage } = this.props;
+  switchPage = id => {
+    this.props.switchPage(id);
+  };
 
-    console.log({ article });
+  render() {
+    const { article, index } = this.props;
 
     return (
       <div className="article">
@@ -18,16 +21,13 @@ class ListItem extends React.Component<ListItemType> {
         <div className="right">
           <div className="header">
             <span className="title">
-              <a
-                href={article && article.url}
-                onClick={
-                  !(article && article.url)
-                    ? () => switchPage(article.id)
-                    : () => {}
-                }
-              >
-                {article.title}
-              </a>
+              {article && article.url ? (
+                <a href={article.url}>{article.title}</a>
+              ) : (
+                <Link to="/item" onClick={() => this.switchPage(article.id)}>
+                  {article.title}
+                </Link>
+              )}
             </span>
             <span className="url">
               {article && article.url ? `(${this.getUrl(article.url)})` : ""}
@@ -38,7 +38,15 @@ class ListItem extends React.Component<ListItemType> {
             <span className="points-by">points by</span>
             <span className="by">{article.by}</span>
           </div>
-          {index === -1 && <div>{article.text}</div>}
+          {index === -1 && (
+            <div
+              className="text"
+              dangerouslySetInnerHTML={{
+                __html:
+                  article && article.text !== undefined ? article.text : "",
+              }}
+            />
+          )}
         </div>
       </div>
     );
