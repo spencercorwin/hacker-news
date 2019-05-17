@@ -1,6 +1,6 @@
 import React from "react";
 import { DiscussType, DiscussState } from "../types/types";
-import { ListItem } from "./ListItem";
+import { ListItemWrapped as ListItem } from "./ListItem";
 import { Comments } from "./Comments";
 
 class Discuss extends React.Component<DiscussType> {
@@ -42,7 +42,11 @@ class Discuss extends React.Component<DiscussType> {
         {!isLoading ? (
           <div>
             <ListItem article={article} index={-1} switchPage={switchPage} />
-            <Comments isLoading={isLoading} id={article.id} />
+            <Comments
+              isLoading={isLoading}
+              kids={article.kids ? article.kids : []}
+              id={article.id}
+            />
           </div>
         ) : (
           <div className="loading">

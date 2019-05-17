@@ -138,7 +138,7 @@ class HomePage extends React.Component<HomePageType> {
       <div className="app">
         <Route path="/" component={this.header} />
         <Route exact path="/" component={this.content} />
-        <Route exact path="/item" component={this.discuss} />
+        <Route path="/item" component={this.discuss} />
       </div>
     );
   }

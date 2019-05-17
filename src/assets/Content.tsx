@@ -1,6 +1,6 @@
 import React from "react";
 import { ContentType, ArticleType } from "../types/types";
-import { ListItem } from "./ListItem";
+import { ListItemWrapped as ListItem } from "./ListItem";
 
 class Content extends React.PureComponent<ContentType> {
   render() {

@@ -1,6 +1,6 @@
 import React from "react";
 import { ListItemType } from "../types/types";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 class ListItem extends React.Component<ListItemType> {
   getUrl = (url: string) => {
@@ -8,7 +8,8 @@ class ListItem extends React.Component<ListItemType> {
     return url.replace(regex, "");
   };
 
-  switchPage = id => {
+  switchPage = (id: number) => {
+    this.props.history.push("/item");
     this.props.switchPage(id);
   };
 
@@ -17,20 +18,20 @@ class ListItem extends React.Component<ListItemType> {
 
     return (
       <div className="article">
-        <div className="left">{index === -1 ? "" : `${index + 1}.`}</div>
+        <div className="left">{index !== -1 && `${index + 1}.`}</div>
         <div className="right">
           <div className="header">
             <span className="title">
               {article && article.url ? (
                 <a href={article.url}>{article.title}</a>
               ) : (
-                <Link to="/item" onClick={() => this.switchPage(article.id)}>
+                <span onClick={() => this.switchPage(article.id)}>
                   {article.title}
-                </Link>
+                </span>
               )}
             </span>
             <span className="url">
-              {article && article.url ? `(${this.getUrl(article.url)})` : ""}
+              {article && article.url && `(${this.getUrl(article.url)})`}
             </span>
           </div>
           <div className="more-info">
@@ -53,4 +54,4 @@ class ListItem extends React.Component<ListItemType> {
   }
 }
 
-export { ListItem };
+export const ListItemWrapped = withRouter(ListItem);

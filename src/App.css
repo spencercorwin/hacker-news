@@ -72,7 +72,8 @@ a {
   min-width: 40px;
 }
 
-.article .header {
+.article .title > span {
+  cursor: pointer;
 }
 
 .article .header .url {

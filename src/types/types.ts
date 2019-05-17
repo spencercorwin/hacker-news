@@ -1,3 +1,5 @@
+import { RouteComponentProps } from "react-router";
+
 export interface ArticleType {
   by: string;
   descendants: number;
@@ -21,7 +23,7 @@ export interface StateType {
   currentID: number;
 }
 
-export interface ListItemType {
+export interface ListItemType extends RouteComponentProps<{}> {
   article: ArticleType;
   index: number;
   switchPage: (id?: number) => void;
@@ -56,5 +58,19 @@ export interface DiscussState {
 export interface CommentsType {
   isLoading: boolean;
   id: number;
+  kids: number[];
 }
-export interface CommentsState {}
+
+export interface CommentsState {
+  comments: Comment[];
+}
+
+export interface CommentType {
+  by: string;
+  id: number;
+  kids: number[];
+  parent: number;
+  text: string;
+  time: number;
+  type: string;
+}

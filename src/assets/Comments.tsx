@@ -1,8 +1,11 @@
 import React from "react";
 import { CommentsType, CommentsState } from "../types/types";
+import { Comment } from "./Comment";
 
 class Comments extends React.Component<CommentsType> {
-  state: CommentsState = {};
+  state: CommentsState = {
+    comments: [],
+  };
 
   componentDidMount() {
     this.setState({ isLoading: true }, this.getArticle);
@@ -14,18 +17,49 @@ class Comments extends React.Component<CommentsType> {
     fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
       .then(res => res.json())
       .then(result => {
-        this.setState({ article: result, isLoading: false });
+        this.setState({ article: result, isLoading: false }, this.getComment);
       })
       .catch(reason => console.log(reason));
   }
 
+  getComment() {
+    const { kids } = this.props;
+
+    kids.forEach((id: number) => {
+      fetch(
+        `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
+      )
+        .then(res => res.json())
+        .then(result => {
+          console.log({ result });
+          this.setState((state: CommentsState) => ({
+            comments: [...state.comments, result],
+          }));
+        });
+    });
+  }
+
   render() {
+    const { comments } = this.state;
     const { isLoading } = this.props;
+
+    console.log({ comments: this.state.comments });
 
     return (
       <div className="">
         {!isLoading ? (
-          <div>comments</div>
+          comments.map((commentInfo: any) => (
+            <Comment
+              by={commentInfo.by}
+              id={commentInfo.id}
+              kids={commentInfo.kids}
+              parent={commentInfo.parent}
+              text={commentInfo.text}
+              time={commentInfo.time}
+              type={commentInfo.type}
+              key={commentInfo.id}
+            />
+          ))
         ) : (
           <div className="loading">
             <img
