@@ -9,7 +9,7 @@ class ListItem extends React.Component<ListItemType> {
   };
 
   switchPage = (id: number) => {
-    this.props.history.push("/item");
+    this.props.history.push(`/item/${id}`);
     this.props.switchPage(id);
   };
 
@@ -35,8 +35,10 @@ class ListItem extends React.Component<ListItemType> {
             </span>
           </div>
           <div className="more-info">
-            <span className="score">{article.score}</span>
-            <span className="points-by">points by</span>
+            <span className="score" onClick={() => this.switchPage(article.id)}>
+              {article.score} points
+            </span>
+            <span className="points-by">by</span>
             <span className="by">{article.by}</span>
           </div>
           {index === -1 && (

@@ -28,7 +28,7 @@ class Discuss extends React.Component<DiscussType> {
     fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
       .then(res => res.json())
       .then(result => {
-        this.setState({ article: result, isLoading: false });
+        this.setState({ article: result });
       })
       .catch(reason => console.log(reason));
   }

@@ -98,6 +98,14 @@ a {
   padding: 0 4px;
 }
 
+.article .comment {
+  margin-top: 10px;
+}
+
+.more-info .score {
+  cursor: pointer;
+}
+
 .more {
   cursor: pointer;
   margin-left: 40px;

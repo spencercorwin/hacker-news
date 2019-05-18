@@ -14,10 +14,12 @@ class Comments extends React.Component<CommentsType> {
   getArticle() {
     const { id } = this.props;
 
+    console.log({ id });
+
     fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
       .then(res => res.json())
       .then(result => {
-        this.setState({ article: result, isLoading: false }, this.getComment);
+        this.setState({ article: result }, this.getComment);
       })
       .catch(reason => console.log(reason));
   }
@@ -34,6 +36,7 @@ class Comments extends React.Component<CommentsType> {
           console.log({ result });
           this.setState((state: CommentsState) => ({
             comments: [...state.comments, result],
+            isLoading: false,
           }));
         });
     });
@@ -42,8 +45,6 @@ class Comments extends React.Component<CommentsType> {
   render() {
     const { comments } = this.state;
     const { isLoading } = this.props;
-
-    console.log({ comments: this.state.comments });
 
     return (
       <div className="">
