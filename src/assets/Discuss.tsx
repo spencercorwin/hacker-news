@@ -37,16 +37,20 @@ class Discuss extends React.Component<DiscussType> {
     const { article } = this.state;
     const { isLoading, switchPage } = this.props;
 
+    console.log({ id: article.id, kids: article.kids });
+
     return (
       <div className="">
         {!isLoading ? (
           <div>
             <ListItem article={article} index={-1} switchPage={switchPage} />
-            <Comments
-              isLoading={isLoading}
-              kids={article.kids ? article.kids : []}
-              id={article.id}
-            />
+            {article.id && (
+              <Comments
+                isLoading={isLoading}
+                kids={article.kids ? article.kids : []}
+                id={article.id}
+              />
+            )}
           </div>
         ) : (
           <div className="loading">

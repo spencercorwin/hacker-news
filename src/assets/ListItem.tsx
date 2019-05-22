@@ -9,8 +9,10 @@ class ListItem extends React.Component<ListItemType> {
   };
 
   switchPage = (id: number) => {
-    this.props.history.push(`/item/${id}`);
-    this.props.switchPage(id);
+    const { history, switchPage } = this.props;
+    console.log("switch page", id, history);
+    history.push(`/item/${id}`);
+    switchPage(id);
   };
 
   render() {

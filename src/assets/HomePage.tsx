@@ -88,6 +88,7 @@ class HomePage extends React.Component<HomePageType> {
   };
 
   switchPage = (id?: number) => {
+    console.log({ switchpageid: id });
     if (this.state.currentID === 0) {
       this.setState({ currentID: id });
     } else {
