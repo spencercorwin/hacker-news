@@ -1,7 +1,7 @@
 import React from "react";
-import { DiscussType, DiscussState } from "../types/types";
-import { ListItemWrapped as ListItem } from "./ListItem";
-import { Comments } from "./Comments";
+import { DiscussType, DiscussState } from "types/types";
+import { ListItemWrapped as ListItem } from "components/ListItem";
+import { Comments } from "components/Comments";
 
 class Discuss extends React.Component<DiscussType> {
   state: DiscussState = {
@@ -36,8 +36,6 @@ class Discuss extends React.Component<DiscussType> {
   render() {
     const { article } = this.state;
     const { isLoading, switchPage } = this.props;
-
-    console.log({ id: article.id, kids: article.kids });
 
     return (
       <div className="">

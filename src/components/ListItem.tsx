@@ -1,5 +1,5 @@
 import React from "react";
-import { ListItemType } from "../types/types";
+import { ListItemType } from "types/types";
 import { withRouter } from "react-router";
 
 class ListItem extends React.Component<ListItemType> {

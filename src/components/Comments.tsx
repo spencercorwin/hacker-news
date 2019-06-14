@@ -1,6 +1,6 @@
 import React from "react";
-import { CommentsType, CommentsState } from "../types/types";
-import { Comment } from "./Comment";
+import { CommentsType, CommentsState } from "types/types";
+import { Comment } from "components/Comment";
 
 class Comments extends React.Component<CommentsType> {
   state: CommentsState = {
@@ -13,8 +13,6 @@ class Comments extends React.Component<CommentsType> {
 
   getArticle() {
     const { id } = this.props;
-
-    console.log({ id });
 
     fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
       .then(res => res.json())
@@ -33,7 +31,6 @@ class Comments extends React.Component<CommentsType> {
       )
         .then(res => res.json())
         .then(result => {
-          console.log({ result });
           this.setState((state: CommentsState) => ({
             comments: [...state.comments, result],
             isLoading: false,

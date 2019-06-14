@@ -1,5 +1,5 @@
 import React from "react";
-import { CommentType } from "../types/types";
+import { CommentType } from "types/types";
 
 class Comment extends React.Component<CommentType> {
   render() {

@@ -1,8 +1,8 @@
 import React from "react";
-import { StateType } from "../types/types";
-import { Header } from "./Header";
-import { Content } from "./Content";
-import { Discuss } from "./Discuss";
+import { StateType } from "types/types";
+import { Header } from "components/Header";
+import { Content } from "modules/Content";
+import { Discuss } from "modules/Discuss";
 import { Route, Redirect, RouteComponentProps } from "react-router-dom";
 
 export interface HomePageType extends RouteComponentProps<any> {}
