@@ -1,17 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { HomePage } from "modules/HomePage";
+import { createStore } from "redux";
+import { HomePageDataContainerWrapped as HomePage } from "modules/HomePage/DataContainer";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
 import * as serviceWorker from "serviceWorker";
-import "assets/styles/app.css";
+import "styles/app.css";
+import { rootReducer } from "rootReducer";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { initialState } from "config/store";
+
+let store = createStore(rootReducer, initialState, composeWithDevTools());
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <Provider store={store}>
       <Router>
         <HomePage />
       </Router>
-    </div>
+    </Provider>
   );
 };
 

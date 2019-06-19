@@ -9,10 +9,10 @@ class Content extends React.PureComponent<ContentType> {
       articles,
       currentIndex,
       switchPage,
-      previousPage,
-      nextPage,
-      counter,
-      showNumberOfArticles,
+      // previousPage,
+      // nextPage,
+      // counter,
+      // showNumberOfArticles,
     } = this.props;
 
     return (
@@ -34,7 +34,7 @@ class Content extends React.PureComponent<ContentType> {
             />
           </div>
         )}
-        <div className="more">
+        {/* <div className="more">
           {currentIndex !== 0 && (
             <>
               <span onClick={() => previousPage()}>
@@ -54,7 +54,7 @@ class Content extends React.PureComponent<ContentType> {
               Show 10 articles
             </span>
           )}
-        </div>
+        </div> */}
       </div>
     );
   }
