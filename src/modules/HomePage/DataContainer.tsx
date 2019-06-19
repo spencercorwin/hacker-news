@@ -1,32 +1,24 @@
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
 import { HomePageLogicContainer } from "./LogicContainer";
-import { StateType } from "types/types";
+import { StateType, HomePageType } from "types/types";
 import { connect } from "react-redux";
-import { switchSortBy } from "./actions";
-
-export interface HomePageType extends RouteComponentProps<any> {
-  switchSortBy: any;
-}
+import { changeSort } from "./actions";
 
 class HomePageDataContainer extends React.Component<HomePageType> {
-  componentDidMount() {
-    // this.props.getArticles();
-  }
   render() {
-    const { switchSortBy } = this.props;
+    const { changeSort, sortBy } = this.props;
 
-    return <HomePageLogicContainer switchSortBy={switchSortBy} />;
+    return <HomePageLogicContainer changeSort={changeSort} sortBy={sortBy} />;
   }
 }
 
 const mapStateToProps = (state: StateType) => ({
-  switchSortBy: state.sortBy,
+  sortBy: state.sortBy,
 });
 
 export const HomePageDataContainerWrapped = connect(
   mapStateToProps,
   {
-    switchSortBy,
+    changeSort,
   }
 )(HomePageDataContainer);

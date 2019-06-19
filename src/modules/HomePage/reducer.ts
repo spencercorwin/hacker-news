@@ -7,10 +7,10 @@ export const reducer = (state: StateType = initialState, action: Action) => {
     case "REMOTE_REQUEST": {
       return state;
     }
-    case "SORT_BY": {
+    case "CHANGE_SORT": {
       return {
         ...state,
-        sortBy: state.sortBy === "topstories" ? "newstories" : "topstories",
+        sortBy: action.url,
       };
     }
 

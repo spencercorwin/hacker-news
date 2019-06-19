@@ -2,33 +2,35 @@ import React from "react";
 import { HeaderType } from "types/types";
 
 class Header extends React.PureComponent<HeaderType> {
-  sortAnotherWay = (stories: string) => {
-    this.props.sortAnotherWay(stories);
+  changeSort = (stories: string) => {
+    const { changeSort } = this.props;
+    changeSort(stories);
   };
 
   render() {
     const { sortBy } = this.props;
+
     return (
       <div className="head">
         <span className="title">Almost Hacker News</span>
         <span className="space">|</span>
         <span
           className={`sort${sortBy === "topstories" ? " active" : ""}`}
-          onClick={() => this.sortAnotherWay("topstories")}
+          onClick={() => this.changeSort("topstories")}
         >
           Top Stories
         </span>
         <span className="space">|</span>
         <span
           className={`sort${sortBy === "newstories" ? " active" : ""}`}
-          onClick={() => this.sortAnotherWay("newstories")}
+          onClick={() => this.changeSort("newstories")}
         >
           New Stories
         </span>
         <span className="space">|</span>
         <span
           className={`sort${sortBy === "beststories" ? " active" : ""}`}
-          onClick={() => this.sortAnotherWay("beststories")}
+          onClick={() => this.changeSort("beststories")}
         >
           Best Stories
         </span>

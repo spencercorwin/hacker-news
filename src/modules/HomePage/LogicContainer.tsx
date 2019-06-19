@@ -1,15 +1,11 @@
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
 import { HomePageDisplayContainer } from "./DisplayContainer";
-
-export interface HomePageType extends RouteComponentProps<any> {
-  switchSortBy: any;
-}
+import { HomePageType } from "types/types";
 
 export class HomePageLogicContainer extends React.Component<HomePageType> {
   render() {
-    const { switchSortBy } = this.props;
+    const { changeSort, sortBy } = this.props;
 
-    return <HomePageDisplayContainer switchSortBy={switchSortBy} />;
+    return <HomePageDisplayContainer changeSort={changeSort} sortBy={sortBy} />;
   }
 }

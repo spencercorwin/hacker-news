@@ -8,7 +8,7 @@ import {
   // Redirect,
   // RouteComponentProps
 } from "react-router-dom";
-import { HomePageType } from "./LogicContainer";
+import { HomePageType } from "types/types";
 
 export class HomePageDisplayContainer extends React.Component<HomePageType> {
   // state: StateType = {
@@ -64,10 +64,6 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
     // });
   };
 
-  onClick = () => {
-    this.props.switchSortBy();
-  };
-
   nextPage = () => {
     // this.setState(
     //   (state: StateType) => ({
@@ -102,9 +98,13 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
   };
 
   header = () => {
-    // const { sortBy } = this.state;
+    const { changeSort, sortBy } = this.props;
     return (
-      <Header sortAnotherWay={this.sortAnotherWay} sortBy={"topstories"} />
+      <Header
+        sortAnotherWay={this.sortAnotherWay}
+        sortBy={sortBy}
+        changeSort={changeSort}
+      />
     );
   };
 
@@ -112,7 +112,7 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
     // const { articles, isLoading, currentIndex, counter } = this.state;
 
     return (
-      <div onClick={this.onClick}>content</div>
+      <div>content</div>
       // <Content
       //   articles={articles.slice(currentIndex, currentIndex + counter)}
       //   isLoading={isLoading}

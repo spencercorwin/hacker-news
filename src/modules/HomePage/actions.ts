@@ -1,32 +1,20 @@
+import { SortByType } from "types/types";
+
 export interface GetArticlesParams {
   currentIndex: number;
   counter: number;
-  sortBy: "topstores" | "newstories" | "beststories";
+  sortBy: SortByType;
   type?: string;
 }
 
-export const switchSortBy = () => ({
-  type: "SORT_BY",
+export interface ChangeSortParams {
+  type: string;
+  url: string;
+}
+
+export const changeSort = (sort: string) => ({
+  type: "CHANGE_SORT",
+  url: sort,
 });
 
-export const getArticles = ({
-  currentIndex,
-  counter,
-  sortBy,
-  type,
-}: GetArticlesParams) => ({
-  type: "REMOTE_REQUEST",
-  status: {
-    request: "GET_ARTICLES_REQUEST",
-    failure: "GET_ARTICLES_FAILURE",
-    success: "GET_ARTICLES_SUCCESS",
-  },
-  data: {
-    currentIndex,
-    counter,
-    sortBy,
-    type,
-  },
-});
-
-export type HomePageActions = GetArticlesParams;
+export type HomePageActions = ChangeSortParams;

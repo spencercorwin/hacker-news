@@ -1,4 +1,5 @@
 import { RouteComponentProps } from "react-router";
+import { changeSort } from "modules/HomePage/actions";
 
 export interface ArticleType {
   by: string;
@@ -19,7 +20,7 @@ export interface StateType {
   isLoading: boolean;
   counter: number;
   currentIndex: 0;
-  sortBy: string;
+  sortBy: SortByType;
   currentID: number;
 }
 
@@ -31,7 +32,8 @@ export interface ListItemType extends RouteComponentProps<{}> {
 
 export interface HeaderType {
   sortAnotherWay: (stories: string) => void;
-  sortBy: string;
+  changeSort: typeof changeSort;
+  sortBy: SortByType;
 }
 
 export interface ContentType {
@@ -74,3 +76,10 @@ export interface CommentType {
   time: number;
   type: string;
 }
+
+export interface HomePageType {
+  changeSort: typeof changeSort;
+  sortBy: SortByType;
+}
+
+export type SortByType = "topstories" | "newstories" | "beststories";

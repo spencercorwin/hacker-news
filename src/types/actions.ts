@@ -1,3 +1,3 @@
-import { GetArticlesParams } from "modules/HomePage/actions";
+import { ChangeSortParams } from "modules/HomePage/actions";
 
-export type Action = GetArticlesParams;
+export type Action = ChangeSortParams;
