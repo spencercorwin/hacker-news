@@ -30,10 +30,10 @@ export interface ListItemType extends RouteComponentProps<{}> {
   switchPage: (id?: number) => void;
 }
 
-export interface HeaderType {
+export interface HeaderType extends RouteComponentProps<{}> {
   sortAnotherWay: (stories: string) => void;
-  changeSort: typeof changeSort;
-  sortBy: SortByType;
+  changeSort: ReturnType<typeof changeSort>;
+  sortBy: string;
 }
 
 export interface ContentType {
@@ -77,8 +77,8 @@ export interface CommentType {
   type: string;
 }
 
-export interface HomePageType {
-  changeSort: typeof changeSort;
+export interface HomePageType extends RouteComponentProps<{}> {
+  changeSort: ReturnType<typeof changeSort>;
   sortBy: SortByType;
 }
 

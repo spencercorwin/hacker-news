@@ -1,6 +1,7 @@
 import React from "react";
-import { HomePageDisplayContainer } from "./DisplayContainer";
+import { HomePageDisplayContainerWrapped as HomePageDisplayContainer } from "./DisplayContainer";
 import { HomePageType } from "types/types";
+import { withRouter } from "react-router";
 
 export class HomePageLogicContainer extends React.Component<HomePageType> {
   render() {
@@ -9,3 +10,5 @@ export class HomePageLogicContainer extends React.Component<HomePageType> {
     return <HomePageDisplayContainer changeSort={changeSort} sortBy={sortBy} />;
   }
 }
+
+export const HomePageLogicContainerWrapped = withRouter(HomePageLogicContainer);

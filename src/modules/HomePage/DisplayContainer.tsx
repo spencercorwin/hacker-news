@@ -1,6 +1,6 @@
 import React from "react";
 // import { StateType } from "types/types";
-import { Header } from "components/Header";
+import { HeaderWrapped as Header } from "components/Header";
 // import { Content } from "modules/HomePage/modules/Content";
 // import { Discuss } from "modules/Discuss";
 import {
@@ -9,6 +9,7 @@ import {
   // RouteComponentProps
 } from "react-router-dom";
 import { HomePageType } from "types/types";
+import { withRouter } from "react-router";
 
 export class HomePageDisplayContainer extends React.Component<HomePageType> {
   // state: StateType = {
@@ -97,12 +98,12 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
     // }
   };
 
-  header = () => {
-    const { changeSort, sortBy } = this.props;
+  renderHeader = () => {
+    const { changeSort } = this.props;
     return (
       <Header
         sortAnotherWay={this.sortAnotherWay}
-        sortBy={sortBy}
+        sortBy={window.location.href.split("/")[3]}
         changeSort={changeSort}
       />
     );
@@ -143,10 +144,14 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
   render() {
     return (
       <div className="app">
-        <Route path="/" component={this.header} />
-        <Route exact path="/" component={this.content} />
+        {this.renderHeader()}
+        <Route exact path="/**/" component={this.content} />
         {/* <Route path="/item" component={this.discuss} /> */}
       </div>
     );
   }
 }
+
+export const HomePageDisplayContainerWrapped = withRouter(
+  HomePageDisplayContainer
+);

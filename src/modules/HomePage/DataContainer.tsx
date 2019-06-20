@@ -1,5 +1,5 @@
 import React from "react";
-import { HomePageLogicContainer } from "./LogicContainer";
+import { HomePageLogicContainerWrapped as HomePageLogicContainer } from "./LogicContainer";
 import { StateType, HomePageType } from "types/types";
 import { connect } from "react-redux";
 import { changeSort } from "./actions";

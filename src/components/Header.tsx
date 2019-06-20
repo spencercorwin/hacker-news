@@ -1,10 +1,12 @@
 import React from "react";
 import { HeaderType } from "types/types";
+import { withRouter } from "react-router";
 
 class Header extends React.PureComponent<HeaderType> {
   changeSort = (stories: string) => {
-    const { changeSort } = this.props;
-    changeSort(stories);
+    // const { changeSort } = this.props;
+    // changeSort(stories);
+    this.props.history.push(stories);
   };
 
   render() {
@@ -39,4 +41,4 @@ class Header extends React.PureComponent<HeaderType> {
   }
 }
 
-export { Header };
+export const HeaderWrapped = withRouter(Header);
