@@ -1,3 +1,3 @@
-import { ChangeSortParams } from "modules/HomePage/actions";
+import { HomePageActions } from "modules/HomePage/actions";
 
-export type Action = ChangeSortParams;
+export type Action = HomePageActions;

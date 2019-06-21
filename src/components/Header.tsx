@@ -4,34 +4,37 @@ import { withRouter } from "react-router";
 
 class Header extends React.PureComponent<HeaderType> {
   changeSort = (stories: string) => {
-    // const { changeSort } = this.props;
-    // changeSort(stories);
-    this.props.history.push(stories);
+    this.props.history.push({
+      pathname: `${stories}`,
+    });
   };
 
   render() {
-    const { sortBy } = this.props;
+    const { location } = this.props;
+
+    const addClassIfActive = path =>
+      location.pathname.includes(path) ? " active" : "";
 
     return (
       <div className="head">
         <span className="title">Almost Hacker News</span>
         <span className="space">|</span>
         <span
-          className={`sort${sortBy === "topstories" ? " active" : ""}`}
+          className={`sort${addClassIfActive("topstories")}`}
           onClick={() => this.changeSort("topstories")}
         >
           Top Stories
         </span>
         <span className="space">|</span>
         <span
-          className={`sort${sortBy === "newstories" ? " active" : ""}`}
+          className={`sort${addClassIfActive("newstories")}`}
           onClick={() => this.changeSort("newstories")}
         >
           New Stories
         </span>
         <span className="space">|</span>
         <span
-          className={`sort${sortBy === "beststories" ? " active" : ""}`}
+          className={`sort${addClassIfActive("beststories")}`}
           onClick={() => this.changeSort("beststories")}
         >
           Best Stories

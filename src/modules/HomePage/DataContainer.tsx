@@ -2,13 +2,10 @@ import React from "react";
 import { HomePageLogicContainerWrapped as HomePageLogicContainer } from "./LogicContainer";
 import { StateType, HomePageType } from "types/types";
 import { connect } from "react-redux";
-import { changeSort } from "./actions";
 
 class HomePageDataContainer extends React.Component<HomePageType> {
   render() {
-    const { changeSort, sortBy } = this.props;
-
-    return <HomePageLogicContainer changeSort={changeSort} sortBy={sortBy} />;
+    return <HomePageLogicContainer />;
   }
 }
 
@@ -18,7 +15,5 @@ const mapStateToProps = (state: StateType) => ({
 
 export const HomePageDataContainerWrapped = connect(
   mapStateToProps,
-  {
-    changeSort,
-  }
+  {}
 )(HomePageDataContainer);

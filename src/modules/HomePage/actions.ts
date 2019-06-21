@@ -1,20 +1,37 @@
-import { SortByType } from "types/types";
-
-export interface GetArticlesParams {
-  currentIndex: number;
-  counter: number;
-  sortBy: SortByType;
-  type?: string;
-}
-
-export interface ChangeSortParams {
+export interface ArticlesParam {
   type: string;
-  url: string;
+  index: number;
+  counter: number;
+  sortBy: string;
+  json?: JsonWebKey;
 }
 
-export const changeSort = (sort: string) => ({
-  type: "CHANGE_SORT",
-  url: sort,
+export interface FailureArticlesParam {
+  type: string;
+}
+
+export const requestArticles = ({ index, counter, sortBy }): ArticlesParam => ({
+  type: "GET_ARTICLES",
+  index,
+  counter,
+  sortBy,
 });
 
-export type HomePageActions = ChangeSortParams;
+export const receiveArticles = ({
+  index,
+  counter,
+  sortBy,
+  json,
+}): ArticlesParam => ({
+  type: "RECEIVE_ARTICLES",
+  index,
+  counter,
+  sortBy,
+  json,
+});
+
+export const failureArticles = (): FailureArticlesParam => ({
+  type: "FAILURE_ARTICLES",
+});
+
+export type HomePageActions = ArticlesParam | FailureArticlesParam;

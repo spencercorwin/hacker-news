@@ -98,16 +98,7 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
     // }
   };
 
-  renderHeader = () => {
-    const { changeSort } = this.props;
-    return (
-      <Header
-        sortAnotherWay={this.sortAnotherWay}
-        sortBy={window.location.href.split("/")[3]}
-        changeSort={changeSort}
-      />
-    );
-  };
+  renderHeader = () => <Header />;
 
   content = () => {
     // const { articles, isLoading, currentIndex, counter } = this.state;

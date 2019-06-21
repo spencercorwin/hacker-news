@@ -5,9 +5,7 @@ import { withRouter } from "react-router";
 
 export class HomePageLogicContainer extends React.Component<HomePageType> {
   render() {
-    const { changeSort, sortBy } = this.props;
-
-    return <HomePageDisplayContainer changeSort={changeSort} sortBy={sortBy} />;
+    return <HomePageDisplayContainer />;
   }
 }
 
