@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import thunkMiddleware from "redux-thunk";
+import { createLogger } from "redux-logger";
+import { createStore, applyMiddleware } from "redux";
 import { HomePageDataContainerWrapped as HomePage } from "modules/HomePage/DataContainer";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -10,7 +12,13 @@ import { rootReducer } from "rootReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { initialState } from "config/store";
 
-let store = createStore(rootReducer, initialState, composeWithDevTools());
+const loggerMiddleware = createLogger();
+
+const store = createStore(
+  rootReducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(thunkMiddleware, loggerMiddleware))
+);
 
 const App: React.FC = () => {
   return (

@@ -1,12 +1,27 @@
 import React from "react";
-import { HomePageDisplayContainerWrapped as HomePageDisplayContainer } from "./DisplayContainer";
+import { HomePageDisplayContainer } from "./DisplayContainer";
 import { HomePageType } from "types/types";
-import { withRouter } from "react-router";
 
 export class HomePageLogicContainer extends React.Component<HomePageType> {
   render() {
-    return <HomePageDisplayContainer />;
+    const {
+      articles,
+      currentIndex,
+      fetchArticles,
+      isLoading,
+      location,
+      history,
+    } = this.props;
+
+    return (
+      <HomePageDisplayContainer
+        fetchArticles={fetchArticles}
+        location={location}
+        articles={articles}
+        currentIndex={currentIndex}
+        isLoading={isLoading}
+        history={history}
+      />
+    );
   }
 }
-
-export const HomePageLogicContainerWrapped = withRouter(HomePageLogicContainer);

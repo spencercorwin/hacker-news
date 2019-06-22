@@ -1,7 +1,7 @@
 import React from "react";
 // import { StateType } from "types/types";
-import { HeaderWrapped as Header } from "components/Header";
-// import { Content } from "modules/HomePage/modules/Content";
+import { Header } from "components/Header";
+import { Content } from "modules/HomePage/modules/Content";
 // import { Discuss } from "modules/Discuss";
 import {
   Route,
@@ -9,9 +9,15 @@ import {
   // RouteComponentProps
 } from "react-router-dom";
 import { HomePageType } from "types/types";
-import { withRouter } from "react-router";
 
 export class HomePageDisplayContainer extends React.Component<HomePageType> {
+  componentDidMount = () => {
+    const { location, fetchArticles } = this.props;
+    const sortBy = location.pathname;
+
+    fetchArticles(sortBy);
+  };
+
   // state: StateType = {
   //   list: [],
   //   articles: [],
@@ -98,13 +104,38 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
     // }
   };
 
-  renderHeader = () => <Header />;
+  renderHeader = () => {
+    const { location, history, fetchArticles } = this.props;
+    return (
+      <Header
+        location={location}
+        history={history}
+        fetchArticles={fetchArticles}
+      />
+    );
+  };
 
   content = () => {
-    // const { articles, isLoading, currentIndex, counter } = this.state;
+    const {
+      articles,
+      isLoading,
+      currentIndex,
+      fetchArticles,
+      location,
+    } = this.props;
+
+    const switchPage = () => {};
 
     return (
-      <div>content</div>
+      <Content
+        articles={articles}
+        isLoading={isLoading}
+        currentIndex={currentIndex}
+        switchPage={switchPage}
+        fetchArticles={fetchArticles}
+        location={location}
+      />
+
       // <Content
       //   articles={articles.slice(currentIndex, currentIndex + counter)}
       //   isLoading={isLoading}
@@ -142,7 +173,3 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
     );
   }
 }
-
-export const HomePageDisplayContainerWrapped = withRouter(
-  HomePageDisplayContainer
-);

@@ -1,19 +1,44 @@
 import React from "react";
-import { HomePageLogicContainerWrapped as HomePageLogicContainer } from "./LogicContainer";
+import { HomePageLogicContainer } from "./LogicContainer";
 import { StateType, HomePageType } from "types/types";
 import { connect } from "react-redux";
+import { fetchArticles } from "./actions";
+import { withRouter } from "react-router";
 
 class HomePageDataContainer extends React.Component<HomePageType> {
   render() {
-    return <HomePageLogicContainer />;
+    const {
+      articles,
+      currentIndex,
+      fetchArticles,
+      isLoading,
+      location,
+      history,
+    } = this.props;
+
+    return (
+      <HomePageLogicContainer
+        fetchArticles={fetchArticles}
+        location={location}
+        articles={articles}
+        currentIndex={currentIndex}
+        isLoading={isLoading}
+        history={history}
+      />
+    );
   }
 }
 
 const mapStateToProps = (state: StateType) => ({
-  sortBy: state.sortBy,
+  articles: state.articles,
+  isLoading: state.articles.isLoading || state.list.isLoading,
+  currentIndex: state.currentIndex,
+  counter: state.counter,
 });
 
-export const HomePageDataContainerWrapped = connect(
-  mapStateToProps,
-  {}
-)(HomePageDataContainer);
+export const HomePageDataContainerWrapped = withRouter(
+  connect(
+    mapStateToProps,
+    { fetchArticles }
+  )(HomePageDataContainer)
+);

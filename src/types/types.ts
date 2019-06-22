@@ -1,4 +1,5 @@
 import { RouteComponentProps } from "react-router";
+import { fetchArticles } from "modules/HomePage/actions";
 
 export interface ArticleType {
   by: string;
@@ -14,13 +15,11 @@ export interface ArticleType {
 }
 
 export interface StateType {
-  list: Number[];
-  articles: ArticleType[];
-  isLoading: boolean;
+  list: { isLoading: Boolean; data: Number[] };
+  articles: ArticlesType;
   counter: number;
   currentIndex: 0;
   sortBy: SortByType;
-  currentID: number;
 }
 
 export interface ListItemType extends RouteComponentProps<{}> {
@@ -29,17 +28,19 @@ export interface ListItemType extends RouteComponentProps<{}> {
   switchPage: (id?: number) => void;
 }
 
-export interface HeaderType extends RouteComponentProps<{}> {}
+export interface HeaderType {
+  location: RouteComponentProps["location"];
+  history: RouteComponentProps["history"];
+  fetchArticles: ReturnType<typeof fetchArticles>;
+}
 
 export interface ContentType {
   isLoading: boolean;
-  articles: ArticleType[];
+  articles: { isLoading: boolean; data: any };
   currentIndex: number;
   switchPage: (id?: number) => void;
-  previousPage: (id?: number) => void;
-  nextPage: (id?: number) => void;
-  showNumberOfArticles: (num: number) => void;
-  counter: number;
+  fetchArticles: ReturnType<typeof fetchArticles>;
+  location: RouteComponentProps["location"];
 }
 
 export interface DiscussType {
@@ -72,6 +73,14 @@ export interface CommentType {
   type: string;
 }
 
-export interface HomePageType extends RouteComponentProps<{}> {}
+export interface HomePageType {
+  fetchArticles: ReturnType<typeof fetchArticles>;
+  location: RouteComponentProps["location"];
+  articles: ArticlesType;
+  currentIndex: number;
+  isLoading: boolean;
+  history: RouteComponentProps["history"];
+}
 
 export type SortByType = "topstories" | "newstories" | "beststories";
+export type ArticlesType = { data: ArticleType[]; isLoading: boolean };
