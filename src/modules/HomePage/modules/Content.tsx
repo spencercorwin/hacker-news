@@ -1,10 +1,20 @@
 import React from "react";
 import { ContentType, ArticleType } from "types/types";
-import { ListItemWrapped as ListItem } from "components/ListItem";
+import { ListItemWrapped as ListItem } from "modules/HomePage/components/ListItem";
 
 export class Content extends React.PureComponent<ContentType> {
   render() {
-    const { isLoading, articles, currentIndex, switchPage } = this.props;
+    const {
+      isLoading,
+      articles,
+      currentIndex,
+      switchPage,
+      toggleArticlesCount,
+      counter,
+      location: { pathname },
+      getUrl,
+      toDiscussPage,
+    } = this.props;
 
     return (
       <div className="content">
@@ -14,7 +24,8 @@ export class Content extends React.PureComponent<ContentType> {
               key={index + currentIndex}
               article={article}
               index={index + currentIndex}
-              switchPage={switchPage}
+              getUrl={getUrl}
+              toDiscussPage={toDiscussPage}
             />
           ))
         ) : (
@@ -25,27 +36,38 @@ export class Content extends React.PureComponent<ContentType> {
             />
           </div>
         )}
-        {/* <div className="more">
+        <div className="more">
           {currentIndex !== 0 && (
             <>
-              <span onClick={() => previousPage()}>
+              <span
+                onClick={() =>
+                  switchPage({
+                    direction: "previous",
+                    sortBy: pathname,
+                  })
+                }
+              >
                 {currentIndex > 0 ? "Before" : ""}
               </span>
               <span className="space">|</span>
             </>
           )}
-          <span onClick={() => nextPage()}>Next</span>
+          <span
+            onClick={() => switchPage({ direction: "next", sortBy: pathname })}
+          >
+            Next
+          </span>
           <span className="space">|</span>
           {counter === 10 ? (
-            <span onClick={() => showNumberOfArticles(20)}>
+            <span onClick={() => toggleArticlesCount(pathname)}>
               Show 20 articles
             </span>
           ) : (
-            <span onClick={() => showNumberOfArticles(10)}>
+            <span onClick={() => toggleArticlesCount(pathname)}>
               Show 10 articles
             </span>
           )}
-        </div> */}
+        </div>
       </div>
     );
   }

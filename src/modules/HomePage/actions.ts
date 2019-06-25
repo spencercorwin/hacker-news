@@ -1,9 +1,12 @@
 import { ArticlesType } from "types/types";
 
-export const GetList = "GET_LIST";
-export const ReceiveList = "RECEIVE_LIST";
-export const GetArticles = "GET_ARTICLES";
-export const ReceiveArticles = "RECEIVE_ARTICLES";
+export const GetList = "HOMEPAGE::GET_LIST";
+export const ReceiveList = "HOMEPAGE::RECEIVE_LIST";
+export const GetArticles = "HOMEPAGE::GET_ARTICLES";
+export const ReceiveArticles = "HOMEPAGE::RECEIVE_ARTICLES";
+export const PreviousPage = "HOMEPAGE::PREVIOUS_PAGE";
+export const NextPage = "HOMEPAGE::NEXT_PAGE";
+export const ToggleCounter = "HOMEPAGE::TOGGLE_COUNTER";
 
 export type ArticlesParam = {
   type: string;
@@ -14,14 +17,17 @@ export type ArticlesParam = {
   counter?: number;
 };
 
-export const requestList = (sortBy): ArticlesParam => ({
+export type SwitchPageType = {
+  direction: "previous" | "next";
+  sortBy: string;
+};
+
+export const requestList = (): ArticlesParam => ({
   type: GetList,
-  sortBy,
 });
 
-export const receiveList = ({ sortBy, json }): ArticlesParam => ({
+export const receiveList = ({ json }): ArticlesParam => ({
   type: ReceiveList,
-  sortBy,
   json,
 });
 
@@ -44,7 +50,8 @@ export const fetchArticlesData = () => (dispatch, getState) => {
     currentIndex,
     counter,
     articles: { isLoading },
-  } = getState();
+  } = getState().homePage;
+
   const articles: ArticlesType = { data: [], isLoading };
   dispatch(requestArticles());
   data.slice(currentIndex, currentIndex + counter).map(number =>
@@ -59,14 +66,46 @@ export const fetchArticlesData = () => (dispatch, getState) => {
   );
 };
 
-export const fetchArticles = (sortBy: ArticlesParam) => dispatch => {
-  dispatch(requestList(sortBy));
+export const fetchArticles = (sortBy: string) => dispatch => {
+  dispatch(requestList());
   return fetch(`https://hacker-news.firebaseio.com/v0/${sortBy}.json`)
     .then(res => res.json())
     .then(result => {
-      dispatch(receiveList({ sortBy, json: result }));
+      dispatch(receiveList({ json: result }));
       dispatch(fetchArticlesData());
     });
+};
+
+export const previousPage = () => ({
+  type: PreviousPage,
+});
+
+export const nextPage = () => ({
+  type: NextPage,
+});
+
+export const switchPage = ({
+  direction,
+  sortBy,
+}: SwitchPageType) => dispatch => {
+  if (direction === "previous") {
+    dispatch(previousPage());
+  }
+
+  if (direction === "next") {
+    dispatch(nextPage());
+  }
+
+  dispatch(fetchArticles(sortBy));
+};
+
+export const toggleCounter = () => ({
+  type: ToggleCounter,
+});
+
+export const toggleArticlesCount = (sortBy: string) => dispatch => {
+  dispatch(toggleCounter());
+  dispatch(fetchArticles(sortBy));
 };
 
 export type HomePageActions = ArticlesParam;

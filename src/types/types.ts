@@ -1,5 +1,10 @@
 import { RouteComponentProps } from "react-router";
-import { fetchArticles } from "modules/HomePage/actions";
+import {
+  fetchArticles,
+  switchPage,
+  toggleArticlesCount,
+} from "modules/HomePage/actions";
+import { fetchArticleForDiscussPage } from "modules/Discuss/actions";
 
 export interface ArticleType {
   by: string;
@@ -15,48 +20,66 @@ export interface ArticleType {
 }
 
 export interface StateType {
-  list: { isLoading: Boolean; data: Number[] };
-  articles: ArticlesType;
-  counter: number;
-  currentIndex: 0;
-  sortBy: SortByType;
+  homePage: {
+    list: {
+      isLoading: boolean;
+      data: Number[];
+    };
+    articles: {
+      isLoading: boolean;
+      data: ArticlesType[];
+    };
+    counter: number;
+    currentIndex: number;
+  };
+  discuss: {
+    comments: {
+      isLoading: boolean;
+      data: CommentsType[];
+    };
+    article: ArticleType | {};
+  };
 }
 
 export interface ListItemType extends RouteComponentProps<{}> {
   article: ArticleType;
   index: number;
-  switchPage: (id?: number) => void;
+  getUrl?: (string) => string;
+  toDiscussPage?: (id: number) => void;
 }
 
-export interface HeaderType {
+export interface HeaderType extends RouteComponentProps<{}> {
   location: RouteComponentProps["location"];
   history: RouteComponentProps["history"];
-  fetchArticles: ReturnType<typeof fetchArticles>;
 }
 
 export interface ContentType {
   isLoading: boolean;
   articles: { isLoading: boolean; data: any };
   currentIndex: number;
-  switchPage: (id?: number) => void;
+  switchPage: ReturnType<typeof switchPage>;
   fetchArticles: ReturnType<typeof fetchArticles>;
   location: RouteComponentProps["location"];
+  toggleArticlesCount: ReturnType<typeof toggleArticlesCount>;
+  counter: number;
+  getUrl?: (string) => string;
+  toDiscussPage?: (id: number) => void;
 }
 
 export interface DiscussType {
   isLoading: boolean;
-  switchPage: (id?: number) => void;
-  id: number;
+  switchPage: ReturnType<typeof switchPage>;
+  location: RouteComponentProps["location"];
+  history: RouteComponentProps["history"];
+  fetchArticleForDiscussPage: ReturnType<typeof fetchArticleForDiscussPage>;
 }
 
 export interface DiscussState {
   article: ArticleType;
 }
 
-export interface CommentsType {
-  isLoading: boolean;
-  id: number;
-  kids: number[];
+export interface CommentsType extends RouteComponentProps<{}> {
+  kids?: number[];
 }
 
 export interface CommentsState {
@@ -73,6 +96,11 @@ export interface CommentType {
   type: string;
 }
 
+export interface Selectors {
+  homePage: HomePageType;
+  discuss: DiscussType;
+}
+
 export interface HomePageType {
   fetchArticles: ReturnType<typeof fetchArticles>;
   location: RouteComponentProps["location"];
@@ -80,7 +108,10 @@ export interface HomePageType {
   currentIndex: number;
   isLoading: boolean;
   history: RouteComponentProps["history"];
+  switchPage: ReturnType<typeof switchPage>;
+  toggleArticlesCount: ReturnType<typeof toggleArticlesCount>;
+  counter: number;
+  getUrl?: (string) => string;
+  toDiscussPage?: (id: number) => void;
 }
-
-export type SortByType = "topstories" | "newstories" | "beststories";
 export type ArticlesType = { data: ArticleType[]; isLoading: boolean };

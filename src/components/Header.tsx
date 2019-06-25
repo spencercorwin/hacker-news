@@ -1,21 +1,9 @@
 import React from "react";
 import { HeaderType } from "types/types";
+import { withRouter } from "react-router";
 
-export class Header extends React.PureComponent<HeaderType> {
-  changeSort = (stories: string) => {
-    const {
-      history,
-      fetchArticles,
-      location: { pathname },
-    } = this.props;
-
-    if (pathname.split("/")[1] === stories) {
-      return;
-    }
-
-    history.push(stories);
-    fetchArticles(stories);
-  };
+class Header extends React.PureComponent<HeaderType> {
+  changeSort = (stories: string) => this.props.history.push(`/${stories}`);
 
   addClassIfActive = path =>
     this.props.location.pathname.includes(path) ? " active" : "";
@@ -49,3 +37,5 @@ export class Header extends React.PureComponent<HeaderType> {
     );
   }
 }
+
+export const HeaderWrapped = withRouter(Header);
