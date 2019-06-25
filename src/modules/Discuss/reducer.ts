@@ -1,12 +1,19 @@
 // import { StateType } from "types/types";
 import { initialState } from "config/store";
 
-export const discussReducer = (state: any = initialState, action: any) => {
+export const discussReducer = (
+  state: any = initialState.discuss,
+  action: any
+) => {
   switch (action.type) {
     case "DISCUSS::FETCH_ARTICLE_START":
-      return { ...state, articles: { ...state.articles, isLoading: true } };
+      return { ...state, isLoading: true };
     case "DISCUSS::RECEIVE_ARTICLE":
-      return { ...state, articles: { isLoading: false, data: [action.json] } };
+      return { ...state, article: action.json, isLoading: false };
+    case "DISCUSS::REQUEST_COMMENTS":
+      return { ...state, isLoading: true };
+    case "DISCUSS::RECEIVE_COMMENTS":
+      return { ...state, isLoading: false, comments: action.array };
     default:
       return state;
   }

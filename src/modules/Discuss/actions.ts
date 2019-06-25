@@ -1,6 +1,7 @@
 export const FetchArticleStart = "DISCUSS::FETCH_ARTICLE_START";
 export const ReceiveArticle = "DISCUSS::RECEIVE_ARTICLE";
-export const ReceiveComment = "DISCUSS::RECEIVE_COMMENT";
+export const ReceiveComments = "DISCUSS::RECEIVE_COMMENTS";
+export const RequestComments = "DISCUSS::REQUEST_COMMENTS";
 
 export const fetchArticleStart = () => ({
   type: FetchArticleStart,
@@ -11,20 +12,35 @@ export const receiveArticle = json => ({
   json,
 });
 
-export const receiveComment = json => ({
-  type: receiveComment,
-  json,
+export const receiveComments = array => ({
+  type: ReceiveComments,
+  array,
+});
+
+export const requestComments = () => ({
+  type: RequestComments,
 });
 
 export const getComments = () => (dispatch, getState) => {
   const {
-    comments: { data },
+    article: { kids },
   } = getState().discuss;
-  data.forEach((id: number) => {
+
+  if (!kids) {
+    return;
+  }
+
+  dispatch(requestComments());
+  const comments: any = [];
+
+  kids.forEach((id: number) => {
     fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
       .then(res => res.json())
       .then(result => {
-        dispatch(receiveArticle(result));
+        comments.push(result);
+        if (kids.length === comments.length) {
+          dispatch(receiveComments(comments));
+        }
       });
   });
 };

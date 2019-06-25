@@ -1,14 +1,12 @@
 import React from "react";
-import { ListItemType } from "types/types";
-import { withRouter } from "react-router";
+import { TopicType } from "types/types";
 
-class ListItem extends React.Component<ListItemType> {
+export class Topic extends React.Component<TopicType> {
   render() {
-    const { article, index, toDiscussPage, getUrl } = this.props;
+    const { article, toDiscussPage, getUrl } = this.props;
 
     return (
       <div className="article">
-        <div className="left">{index !== -1 && `${index + 1}.`}</div>
         <div className="right">
           <div className="header">
             <span className="title">
@@ -36,10 +34,14 @@ class ListItem extends React.Component<ListItemType> {
             <span className="points-by">by</span>
             <span className="by">{article.by}</span>
           </div>
+          <div
+            className="text"
+            dangerouslySetInnerHTML={{
+              __html: article && article.text !== undefined ? article.text : "",
+            }}
+          />
         </div>
       </div>
     );
   }
 }
-
-export const ListItemWrapped = withRouter(ListItem);

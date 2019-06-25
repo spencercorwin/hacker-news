@@ -3,7 +3,14 @@ import { HeaderType } from "types/types";
 import { withRouter } from "react-router";
 
 class Header extends React.PureComponent<HeaderType> {
-  changeSort = (stories: string) => this.props.history.push(`/${stories}`);
+  changeSort = (stories: string) => {
+    const {
+      resetIndex,
+      history: { push },
+    } = this.props;
+    resetIndex && resetIndex();
+    push(`/${stories}`);
+  };
 
   addClassIfActive = path =>
     this.props.location.pathname.includes(path) ? " active" : "";

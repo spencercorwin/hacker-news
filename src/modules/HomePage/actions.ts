@@ -1,4 +1,4 @@
-import { ArticlesType } from "types/types";
+import { ArticleType } from "types/types";
 
 export const GetList = "HOMEPAGE::GET_LIST";
 export const ReceiveList = "HOMEPAGE::RECEIVE_LIST";
@@ -7,6 +7,7 @@ export const ReceiveArticles = "HOMEPAGE::RECEIVE_ARTICLES";
 export const PreviousPage = "HOMEPAGE::PREVIOUS_PAGE";
 export const NextPage = "HOMEPAGE::NEXT_PAGE";
 export const ToggleCounter = "HOMEPAGE::TOGGLE_COUNTER";
+export const ResetIndex = "HOMEPAGE::RESET_INDEX";
 
 export type ArticlesParam = {
   type: string;
@@ -45,22 +46,17 @@ export const receiveArticles = (json): ArticlesParam => ({
 });
 
 export const fetchArticlesData = () => (dispatch, getState) => {
-  const {
-    list: { data },
-    currentIndex,
-    counter,
-    articles: { isLoading },
-  } = getState().homePage;
+  const { list, currentIndex, counter } = getState().homePage;
 
-  const articles: ArticlesType = { data: [], isLoading };
+  const articles: ArticleType[] = [];
   dispatch(requestArticles());
-  data.slice(currentIndex, currentIndex + counter).map(number =>
+  list.slice(currentIndex, currentIndex + counter).map(number =>
     fetch(`https://hacker-news.firebaseio.com/v0/item/${number}.json`)
       .then(res => res.json())
       .then(result => {
-        articles.data.push(result);
-        if (articles.data.length === counter) {
-          dispatch(receiveArticles(articles.data));
+        articles.push(result);
+        if (articles.length === counter) {
+          dispatch(receiveArticles(articles));
         }
       })
   );
@@ -107,5 +103,9 @@ export const toggleArticlesCount = (sortBy: string) => dispatch => {
   dispatch(toggleCounter());
   dispatch(fetchArticles(sortBy));
 };
+
+export const resetIndex = () => ({
+  type: ResetIndex,
+});
 
 export type HomePageActions = ArticlesParam;

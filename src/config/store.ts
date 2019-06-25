@@ -2,22 +2,15 @@ import { StateType } from "types/types";
 
 export const initialState: StateType = {
   homePage: {
-    list: {
-      isLoading: false,
-      data: [],
-    },
-    articles: {
-      isLoading: false,
-      data: [],
-    },
+    list: [],
+    articles: [],
     counter: 10,
     currentIndex: 0,
+    isLoading: false,
   },
   discuss: {
-    comments: {
-      isLoading: false,
-      data: [],
-    },
+    comments: [],
     article: {},
+    isLoading: false,
   },
 };

@@ -1,16 +1,28 @@
 import React from "react";
 import { DiscussType } from "types/types";
 import { HeaderWrapped as Header } from "components/Header";
-// import { Comments } from "components/Comments";
+import { Discussion } from "./modules/Discussion";
 
 export class DiscussDisplayContainer extends React.Component<DiscussType> {
   render() {
-    // const { isLoading } = this.props;
+    const {
+      resetIndex,
+      isLoading,
+      comments,
+      article,
+      getUrl,
+      toDiscussPage,
+    } = this.props;
     return (
       <div>
-        <Header />
-        {/* {!isLoading ? (
-          // <Comments kids={[]} />
+        <Header resetIndex={resetIndex} />
+        {!isLoading ? (
+          <Discussion
+            comments={comments}
+            article={article}
+            getUrl={getUrl}
+            toDiscussPage={toDiscussPage}
+          />
         ) : (
           <div className="loading">
             <img
@@ -18,7 +30,7 @@ export class DiscussDisplayContainer extends React.Component<DiscussType> {
               src="https://cdn.friendbuy.com/widget/images/shared/spinner.svg"
             />
           </div>
-        )} */}
+        )}
       </div>
     );
   }

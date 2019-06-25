@@ -38,7 +38,7 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
   render() {
     return (
       <div className="app">
-        <Header />
+        <Header resetIndex={this.props.resetIndex} />
         <Route exact path="/**/" component={this.content} />
       </div>
     );

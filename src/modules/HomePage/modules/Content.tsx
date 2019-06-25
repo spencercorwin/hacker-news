@@ -18,8 +18,8 @@ export class Content extends React.PureComponent<ContentType> {
 
     return (
       <div className="content">
-        {!isLoading && articles.data.length > 0 ? (
-          articles.data.map((article: ArticleType, index) => (
+        {!isLoading && articles.length > 0 ? (
+          articles.map((article: ArticleType, index) => (
             <ListItem
               key={index + currentIndex}
               article={article}

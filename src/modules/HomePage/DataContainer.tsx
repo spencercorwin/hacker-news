@@ -2,7 +2,12 @@ import React from "react";
 import { HomePageLogicContainer } from "./LogicContainer";
 import { Selectors, HomePageType } from "types/types";
 import { connect } from "react-redux";
-import { fetchArticles, switchPage, toggleArticlesCount } from "./actions";
+import {
+  fetchArticles,
+  switchPage,
+  toggleArticlesCount,
+  resetIndex,
+} from "./actions";
 import { withRouter } from "react-router";
 
 class HomePageDataContainer extends React.Component<HomePageType> {
@@ -36,6 +41,7 @@ class HomePageDataContainer extends React.Component<HomePageType> {
       switchPage,
       toggleArticlesCount,
       counter,
+      resetIndex,
     } = this.props;
 
     return (
@@ -49,6 +55,7 @@ class HomePageDataContainer extends React.Component<HomePageType> {
         switchPage={switchPage}
         toggleArticlesCount={toggleArticlesCount}
         counter={counter}
+        resetIndex={resetIndex}
       />
     );
   }
@@ -57,7 +64,7 @@ class HomePageDataContainer extends React.Component<HomePageType> {
 const mapStateToProps = (state: Selectors) => {
   return {
     articles: state.homePage.articles,
-    isLoading: state.homePage.articles.isLoading,
+    isLoading: state.homePage.isLoading,
     currentIndex: state.homePage.currentIndex,
     counter: state.homePage.counter,
   };
@@ -66,6 +73,6 @@ const mapStateToProps = (state: Selectors) => {
 export const HomePageDataContainerWrapped = withRouter(
   connect(
     mapStateToProps,
-    { fetchArticles, switchPage, toggleArticlesCount }
+    { fetchArticles, switchPage, toggleArticlesCount, resetIndex }
   )(HomePageDataContainer)
 );

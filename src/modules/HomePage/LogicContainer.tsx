@@ -28,6 +28,7 @@ export class HomePageLogicContainer extends React.Component<HomePageType> {
       history,
       toggleArticlesCount,
       counter,
+      resetIndex,
     } = this.props;
 
     return (
@@ -43,6 +44,7 @@ export class HomePageLogicContainer extends React.Component<HomePageType> {
         counter={counter}
         getUrl={this.getUrl}
         toDiscussPage={this.toDiscussPage}
+        resetIndex={resetIndex}
       />
     );
   }

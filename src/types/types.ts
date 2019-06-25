@@ -21,23 +21,16 @@ export interface ArticleType {
 
 export interface StateType {
   homePage: {
-    list: {
-      isLoading: boolean;
-      data: Number[];
-    };
-    articles: {
-      isLoading: boolean;
-      data: ArticlesType[];
-    };
+    list: Number[];
+    articles: ArticleType[];
     counter: number;
     currentIndex: number;
+    isLoading: boolean;
   };
   discuss: {
-    comments: {
-      isLoading: boolean;
-      data: CommentsType[];
-    };
+    comments: CommentsType[];
     article: ArticleType | {};
+    isLoading: boolean;
   };
 }
 
@@ -51,11 +44,12 @@ export interface ListItemType extends RouteComponentProps<{}> {
 export interface HeaderType extends RouteComponentProps<{}> {
   location: RouteComponentProps["location"];
   history: RouteComponentProps["history"];
+  resetIndex?: () => {};
 }
 
 export interface ContentType {
   isLoading: boolean;
-  articles: { isLoading: boolean; data: any };
+  articles: ArticleType[];
   currentIndex: number;
   switchPage: ReturnType<typeof switchPage>;
   fetchArticles: ReturnType<typeof fetchArticles>;
@@ -72,6 +66,11 @@ export interface DiscussType {
   location: RouteComponentProps["location"];
   history: RouteComponentProps["history"];
   fetchArticleForDiscussPage: ReturnType<typeof fetchArticleForDiscussPage>;
+  resetIndex?: () => {};
+  article: ArticleType;
+  comments: CommentType[];
+  getUrl?: (string) => string;
+  toDiscussPage?: (id: number) => void;
 }
 
 export interface DiscussState {
@@ -79,7 +78,7 @@ export interface DiscussState {
 }
 
 export interface CommentsType extends RouteComponentProps<{}> {
-  kids?: number[];
+  comments: CommentType[];
 }
 
 export interface CommentsState {
@@ -104,7 +103,7 @@ export interface Selectors {
 export interface HomePageType {
   fetchArticles: ReturnType<typeof fetchArticles>;
   location: RouteComponentProps["location"];
-  articles: ArticlesType;
+  articles: ArticleType[];
   currentIndex: number;
   isLoading: boolean;
   history: RouteComponentProps["history"];
@@ -113,5 +112,18 @@ export interface HomePageType {
   counter: number;
   getUrl?: (string) => string;
   toDiscussPage?: (id: number) => void;
+  resetIndex?: () => {};
 }
-export type ArticlesType = { data: ArticleType[]; isLoading: boolean };
+
+export interface TopicType {
+  article: ArticleType;
+  getUrl?: (string) => string;
+  toDiscussPage?: (id: number) => void;
+}
+
+export interface DiscussionType {
+  article: ArticleType;
+  comments: CommentType[];
+  getUrl?: (string) => string;
+  toDiscussPage?: (id: number) => void;
+}
