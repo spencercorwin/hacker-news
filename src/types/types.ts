@@ -21,14 +21,14 @@ export interface ArticleType {
 
 export interface StateType {
   homePage: {
-    list: Number[];
+    list: number[];
     articles: ArticleType[];
     counter: number;
     currentIndex: number;
     isLoading: boolean;
   };
   discuss: {
-    comments: CommentsType[];
+    comments: CommentType | {};
     article: ArticleType | {};
     isLoading: boolean;
   };
@@ -68,9 +68,7 @@ export interface DiscussType {
   fetchArticleForDiscussPage: ReturnType<typeof fetchArticleForDiscussPage>;
   resetIndex?: () => {};
   article: ArticleType;
-  comments: CommentType[];
-  getUrl?: (string) => string;
-  toDiscussPage?: (id: number) => void;
+  comments: CommentType | {};
 }
 
 export interface DiscussState {
@@ -78,7 +76,7 @@ export interface DiscussState {
 }
 
 export interface CommentsType extends RouteComponentProps<{}> {
-  comments: CommentType[];
+  comments: CommentType | {};
 }
 
 export interface CommentsState {
@@ -117,13 +115,15 @@ export interface HomePageType {
 
 export interface TopicType {
   article: ArticleType;
-  getUrl?: (string) => string;
-  toDiscussPage?: (id: number) => void;
 }
 
 export interface DiscussionType {
   article: ArticleType;
-  comments: CommentType[];
+  comments: CommentType | {};
   getUrl?: (string) => string;
   toDiscussPage?: (id: number) => void;
+}
+
+export interface ArticleItemType extends RouteComponentProps {
+  article: ArticleType;
 }

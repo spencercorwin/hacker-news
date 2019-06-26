@@ -5,24 +5,12 @@ import { Discussion } from "./modules/Discussion";
 
 export class DiscussDisplayContainer extends React.Component<DiscussType> {
   render() {
-    const {
-      resetIndex,
-      isLoading,
-      comments,
-      article,
-      getUrl,
-      toDiscussPage,
-    } = this.props;
+    const { resetIndex, isLoading, comments, article } = this.props;
     return (
       <div>
         <Header resetIndex={resetIndex} />
         {!isLoading ? (
-          <Discussion
-            comments={comments}
-            article={article}
-            getUrl={getUrl}
-            toDiscussPage={toDiscussPage}
-          />
+          <Discussion comments={comments} article={article} />
         ) : (
           <div className="loading">
             <img

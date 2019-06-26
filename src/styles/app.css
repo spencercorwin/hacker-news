@@ -12,6 +12,10 @@
   font-weight: 400;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 body {
   font-family: "Verdana";
 }
@@ -54,6 +58,7 @@ body {
 }
 
 .content {
+  max-width: 1000px;
 }
 
 a {
@@ -94,16 +99,8 @@ a {
   margin-top: 10px;
 }
 
-.article .points-by {
-  padding: 0 4px;
-}
-
 .article .comment {
   margin-top: 10px;
-}
-
-.more-info .score {
-  cursor: pointer;
 }
 
 .more {
@@ -112,5 +109,8 @@ a {
   margin-bottom: 10px;
 }
 
-.more span {
+.more-info > span {
+  color: #828282;
+  padding-right: 5px;
+  font-size: 0.9em;
 }

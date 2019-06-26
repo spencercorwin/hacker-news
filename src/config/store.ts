@@ -9,7 +9,7 @@ export const initialState: StateType = {
     isLoading: false,
   },
   discuss: {
-    comments: [],
+    comments: {},
     article: {},
     isLoading: false,
   },

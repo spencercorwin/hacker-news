@@ -7,9 +7,11 @@ class Comments extends React.Component<CommentsType> {
   render() {
     const { comments } = this.props;
 
+    console.log({ comments: Object.values(comments) });
+
     return (
       <div className="">
-        {comments.map((comment: CommentType) => (
+        {Object.values(comments).map((comment: CommentType) => (
           <Comment
             by={comment.by}
             id={comment.id}

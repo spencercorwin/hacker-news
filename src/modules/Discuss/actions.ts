@@ -1,3 +1,5 @@
+import { ArticleType } from "types/types";
+
 export const FetchArticleStart = "DISCUSS::FETCH_ARTICLE_START";
 export const ReceiveArticle = "DISCUSS::RECEIVE_ARTICLE";
 export const ReceiveComments = "DISCUSS::RECEIVE_COMMENTS";
@@ -12,75 +14,48 @@ export const receiveArticle = json => ({
   json,
 });
 
-export const receiveComments = array => ({
+export const receiveComments = json => ({
   type: ReceiveComments,
-  array,
+  json,
 });
 
 export const requestComments = () => ({
   type: RequestComments,
 });
 
-export const getComments = () => (dispatch, getState) => {
-  const {
-    article: { kids },
-  } = getState().discuss;
-
-  if (!kids) {
+export const getComments = (
+  kids: number[],
+  commentsObject: any,
+  descendants
+) => dispatch => {
+  if (!kids.length) {
     return;
   }
 
-  dispatch(requestComments());
-  const comments: any = [];
-
   kids.forEach((id: number) => {
-    fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
-      .then(res => res.json())
-      .then(result => {
-        comments.push(result);
-        if (kids.length === comments.length) {
-          dispatch(receiveComments(comments));
-        }
-      });
+    return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(
+      res =>
+        res.json().then(result => {
+          commentsObject[id] = result;
+          if (result.kids) {
+            dispatch(getComments(result.kids, commentsObject, descendants));
+          }
+          if (Object.keys(commentsObject).length === descendants) {
+            dispatch(receiveComments(commentsObject));
+          }
+        })
+    );
   });
 };
 
 export const fetchArticleForDiscussPage = (id: number) => dispatch => {
   dispatch(fetchArticleStart());
-  return fetch(
-    `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
-  )
+  return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
     .then(res => res.json())
-    .then(result => {
+    .then((result: ArticleType) => {
+      if (result.kids) {
+        dispatch(getComments(result.kids, {}, result.descendants));
+      }
       dispatch(receiveArticle(result));
-      dispatch(getComments());
     });
 };
-
-// getArticle() {
-//   const { id } = this.props.location;
-
-//   fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`)
-//     .then(res => res.json())
-//     .then(result => {
-//       this.setState({ article: result }, this.getComment);
-//     })
-//     .catch(reason => console.log(reason));
-// }
-
-// getComment() {
-//   const { kids } = this.props;
-
-//   kids.forEach((id: number) => {
-//     fetch(
-//       `https://hacker-news.firebaseio.com/v0/item/${id}.json?print=pretty`
-//     )
-//       .then(res => res.json())
-//       .then(result => {
-//         this.setState((state: CommentsState) => ({
-//           comments: [...state.comments, result],
-//           isLoading: false,
-//         }));
-//       });
-//   });
-// }

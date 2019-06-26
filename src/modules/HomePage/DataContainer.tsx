@@ -25,6 +25,7 @@ class HomePageDataContainer extends React.Component<HomePageType> {
       location: { pathname },
       fetchArticles,
     } = this.props;
+
     if (prevProps.location.pathname !== pathname) {
       fetchArticles(pathname);
     }

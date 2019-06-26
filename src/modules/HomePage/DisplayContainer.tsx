@@ -3,6 +3,7 @@ import { HeaderWrapped as Header } from "components/Header";
 import { Content } from "modules/HomePage/modules/Content";
 import { Route } from "react-router-dom";
 import { HomePageType } from "types/types";
+import { IsLoading } from "components/IsLoading";
 
 export class HomePageDisplayContainer extends React.Component<HomePageType> {
   content = () => {
@@ -15,9 +16,11 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
       switchPage,
       toggleArticlesCount,
       counter,
-      getUrl,
-      toDiscussPage,
     } = this.props;
+
+    if (isLoading) {
+      return <IsLoading />;
+    }
 
     return (
       <Content
@@ -29,8 +32,6 @@ export class HomePageDisplayContainer extends React.Component<HomePageType> {
         location={location}
         toggleArticlesCount={toggleArticlesCount}
         counter={counter}
-        getUrl={getUrl}
-        toDiscussPage={toDiscussPage}
       />
     );
   };

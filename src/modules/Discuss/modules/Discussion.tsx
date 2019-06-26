@@ -5,22 +5,12 @@ import { Topic } from "../components/Topic";
 
 export class Discussion extends React.Component<DiscussionType> {
   render() {
-    const {
-      article,
-      comments,
-      // switchPage
-      toDiscussPage,
-      getUrl,
-    } = this.props;
+    const { article, comments } = this.props;
 
     return (
-      <div className="">
+      <div className="content">
         <div>
-          <Topic
-            article={article}
-            toDiscussPage={toDiscussPage}
-            getUrl={getUrl}
-          />
+          <Topic article={article} />
           {article.id && <Comments comments={comments} />}
         </div>
       </div>
