@@ -75,8 +75,9 @@ export interface DiscussState {
   article: ArticleType;
 }
 
-export interface CommentsType extends RouteComponentProps<{}> {
+export interface CommentsType {
   comments: CommentType | {};
+  kids: number[];
 }
 
 export interface CommentsState {
@@ -91,6 +92,11 @@ export interface CommentType {
   text: string;
   time: number;
   type: string;
+}
+
+export interface CommentComponentType {
+  comment: CommentType;
+  comments: CommentType | {};
 }
 
 export interface Selectors {
@@ -126,4 +132,8 @@ export interface DiscussionType {
 
 export interface ArticleItemType extends RouteComponentProps {
   article: ArticleType;
+}
+
+export interface SpaceType {
+  toggleView: () => void;
 }

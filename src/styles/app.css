@@ -114,3 +114,20 @@ a {
   padding-right: 5px;
   font-size: 0.9em;
 }
+
+.comments-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.comments-container .comment-space {
+  cursor: pointer;
+}
+
+.comments-container .comment-space div {
+  margin: 0 10px;
+  min-width: 1px;
+  background-color: #c3c3c3;
+  cursor: pointer;
+  height: 100%;
+}
