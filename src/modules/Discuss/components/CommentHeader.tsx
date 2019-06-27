@@ -7,14 +7,16 @@ export class CommentHeader extends React.Component<CommentHeaderType> {
   };
   render() {
     const {
-      comment: { by },
+      comment: { by, id, parent },
       isOpen,
     } = this.props;
     return (
       <div className="more-info">
-        <span>{by}</span>
+        <span className={`id: ${id}, parent: ${parent}`}>{by}</span>
         <span>some time ago</span>
-        <span onClick={this.toggleView}>{isOpen ? "[-]" : "[+]"}</span>
+        <span className="cursor" onClick={this.toggleView}>
+          {isOpen ? "[-]" : "[+]"}
+        </span>
       </div>
     );
   }

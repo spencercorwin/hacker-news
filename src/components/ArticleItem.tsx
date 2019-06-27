@@ -27,6 +27,10 @@ class ArticleItem extends React.Component<ArticleItemType> {
   render() {
     const { article } = this.props;
 
+    if (!article) {
+      console.log({ article });
+    }
+
     return (
       <>
         <div className="header">

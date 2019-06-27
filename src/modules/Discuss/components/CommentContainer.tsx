@@ -30,7 +30,6 @@ export class CommentContainer extends React.Component<CommentComponentType> {
             comment={comment}
             toggleView={this.toggleView}
           />
-
           {isOpen && (
             <Comment
               comments={comments}

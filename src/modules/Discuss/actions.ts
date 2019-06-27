@@ -37,7 +37,7 @@ export const getComments = (
       res =>
         res.json().then(result => {
           commentsObject[id] = result;
-          if (result.kids) {
+          if (result && result.kids) {
             dispatch(getComments(result.kids, commentsObject, descendants));
           }
           if (Object.keys(commentsObject).length === descendants) {
@@ -53,7 +53,7 @@ export const fetchArticleForDiscussPage = (id: number) => dispatch => {
   return fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)
     .then(res => res.json())
     .then((result: ArticleType) => {
-      if (result.kids) {
+      if (result && result.kids) {
         dispatch(getComments(result.kids, {}, result.descendants));
       }
       dispatch(receiveArticle(result));

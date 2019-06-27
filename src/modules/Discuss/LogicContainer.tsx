@@ -4,9 +4,10 @@ import { DiscussDisplayContainer } from "./DisplayContainer";
 
 export class DiscussLogicContainer extends React.Component<DiscussType> {
   childrenCommentsArray = (comments: CommentType | {}, kids: number[]) =>
-    Object.values(comments).filter((comment: CommentType) =>
-      kids.includes(comment.id)
-    );
+    Object.values(comments).filter((comment: CommentType) => {
+      console.log({ comment });
+      return kids.includes(comment && comment.id);
+    });
 
   render() {
     const {
