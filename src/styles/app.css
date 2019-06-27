@@ -90,7 +90,7 @@ a {
   margin-right: 25px;
 }
 
-.article .more-info {
+.more-info {
   display: flex;
   flex-direction: row;
 }
@@ -109,10 +109,16 @@ a {
   margin-bottom: 10px;
 }
 
-.more-info > span {
+.more-info > span,
+.open-click {
   color: #828282;
   padding-right: 5px;
   font-size: 0.9em;
+  width: fit-content;
+}
+
+.comments-container .more-info {
+  padding: 5px 0 3px;
 }
 
 .comments-container {

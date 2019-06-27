@@ -1,7 +1,7 @@
 import React from "react";
 import { DiscussionType } from "types/types";
-import { Comments } from "modules/Discuss/components/Comments";
 import { Topic } from "../components/Topic";
+import { CommentContainer } from "../components/CommentContainer";
 
 export class Discussion extends React.Component<DiscussionType> {
   render() {
@@ -9,14 +9,24 @@ export class Discussion extends React.Component<DiscussionType> {
       article,
       article: { kids },
       comments,
+      childrenCommentsArray,
     } = this.props;
 
     return (
       <div className="content">
-        <div>
-          <Topic article={article} />
-          {article.id && <Comments comments={comments} kids={kids} />}
-        </div>
+        <Topic article={article} />
+        {article.id &&
+          kids &&
+          childrenCommentsArray &&
+          childrenCommentsArray(comments, kids).map(comment => (
+            <CommentContainer
+              comments={comments}
+              comment={comment}
+              childrenCommentsArray={childrenCommentsArray}
+              key={comment.id}
+              isFirstRender={true}
+            />
+          ))}
       </div>
     );
   }

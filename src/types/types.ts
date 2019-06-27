@@ -69,6 +69,7 @@ export interface DiscussType {
   resetIndex?: () => {};
   article: ArticleType;
   comments: CommentType | {};
+  childrenCommentsArray?: (comments: {} | CommentType, kids: number[]) => any[];
 }
 
 export interface DiscussState {
@@ -78,6 +79,9 @@ export interface DiscussState {
 export interface CommentsType {
   comments: CommentType | {};
   kids: number[];
+  toggleView?: () => void;
+  isOpen?: boolean;
+  childrenCommentsArray: (comments: {} | CommentType, kids: number[]) => any[];
 }
 
 export interface CommentsState {
@@ -97,6 +101,8 @@ export interface CommentType {
 export interface CommentComponentType {
   comment: CommentType;
   comments: CommentType | {};
+  childrenCommentsArray: (comments: {} | CommentType, kids: number[]) => any[];
+  isFirstRender?: boolean | undefined;
 }
 
 export interface Selectors {
@@ -128,6 +134,7 @@ export interface DiscussionType {
   comments: CommentType | {};
   getUrl?: (string) => string;
   toDiscussPage?: (id: number) => void;
+  childrenCommentsArray?: (comments: {} | CommentType, kids: number[]) => any[];
 }
 
 export interface ArticleItemType extends RouteComponentProps {
@@ -136,4 +143,10 @@ export interface ArticleItemType extends RouteComponentProps {
 
 export interface SpaceType {
   toggleView: () => void;
+}
+
+export interface CommentHeaderType {
+  comment: CommentType;
+  toggleView?: () => void;
+  isOpen: boolean;
 }
