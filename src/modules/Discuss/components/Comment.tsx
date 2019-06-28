@@ -8,33 +8,51 @@ export class Comment extends React.Component<CommentsType> {
   };
 
   render() {
-    const { comments, kids, childrenCommentsArray } = this.props;
+    const {
+      comments,
+      comment,
+      childrenCommentsArray,
+      isFirstRender = false,
+    } = this.props;
 
-    if (!kids) {
+    if (!comment.kids && isFirstRender) {
+      return (
+        <div
+          className="comment"
+          dangerouslySetInnerHTML={{
+            __html: comment.text ? comment.text : "",
+          }}
+        />
+      );
+    }
+
+    if (!comment.kids) {
       return null;
     }
 
     return (
       <div>
-        {childrenCommentsArray(comments, kids).map((comment: CommentType) => {
-          return (
-            <div key={comment.id}>
-              <div
-                className="comment"
-                dangerouslySetInnerHTML={{
-                  __html: comment.text ? comment.text : "",
-                }}
-              />
-              {comment.kids && (
-                <CommentContainer
-                  comment={comment}
-                  comments={comments}
-                  childrenCommentsArray={childrenCommentsArray}
+        {childrenCommentsArray(comments, comment.kids).map(
+          (comment: CommentType) => {
+            return (
+              <div key={comment.id}>
+                <div
+                  className="comment"
+                  dangerouslySetInnerHTML={{
+                    __html: comment.text ? comment.text : "",
+                  }}
                 />
-              )}
-            </div>
-          );
-        })}
+                {comment.kids && (
+                  <CommentContainer
+                    comment={comment}
+                    comments={comments}
+                    childrenCommentsArray={childrenCommentsArray}
+                  />
+                )}
+              </div>
+            );
+          }
+        )}
       </div>
     );
   }

@@ -14,7 +14,7 @@ export class CommentContainer extends React.Component<CommentComponentType> {
   render() {
     const { isOpen } = this.state;
     const {
-      comment: { id, kids },
+      comment: { id },
       comment,
       comments,
       childrenCommentsArray,
@@ -33,7 +33,8 @@ export class CommentContainer extends React.Component<CommentComponentType> {
           {isOpen && (
             <Comment
               comments={comments}
-              kids={kids}
+              comment={comment}
+              isFirstRender={isFirstRender}
               toggleView={this.toggleView}
               isOpen={isOpen}
               childrenCommentsArray={childrenCommentsArray}

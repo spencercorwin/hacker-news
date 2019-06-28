@@ -18,15 +18,17 @@ export class Discussion extends React.Component<DiscussionType> {
         {article.id &&
           kids &&
           childrenCommentsArray &&
-          childrenCommentsArray(comments, kids).map(comment => (
-            <CommentContainer
-              comments={comments}
-              comment={comment}
-              childrenCommentsArray={childrenCommentsArray}
-              key={comment.id}
-              isFirstRender={true}
-            />
-          ))}
+          childrenCommentsArray(comments, kids).map(comment => {
+            return (
+              <CommentContainer
+                comments={comments}
+                comment={comment}
+                childrenCommentsArray={childrenCommentsArray}
+                key={comment.id}
+                isFirstRender={true}
+              />
+            );
+          })}
       </div>
     );
   }

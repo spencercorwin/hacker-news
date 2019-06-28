@@ -78,10 +78,11 @@ export interface DiscussState {
 
 export interface CommentsType {
   comments: CommentType | {};
-  kids: number[];
+  comment: CommentType;
   toggleView?: () => void;
   isOpen?: boolean;
   childrenCommentsArray: (comments: {} | CommentType, kids: number[]) => any[];
+  isFirstRender?: boolean | undefined;
 }
 
 export interface CommentsState {
