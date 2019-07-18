@@ -21,7 +21,7 @@ const store = createStore(
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename="/hacker-news">
         <RouteContainer />
       </Router>
     </Provider>
